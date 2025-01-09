@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxWave 毫米波雷達 | 產品介紹</title>
+  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
+      </a>
+      <h1 class="site-title">LuxWave 璿機科技</h1>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html" class="gradient-btn">首頁</a></li>
+        <li><a href="products.html" class="gradient-btn active">產品介紹</a></li>
+        <li><a href="about.html" class="gradient-btn">關於我們</a></li>
+      </ul>
+    </nav>
+    <div class="language-switch">
+      <select id="languageSelect">
+        <option value="zh-TW" selected>繁中</option>
+        <option value="zh-CN">简中</option>
+        <option value="en-US">English</option>
+        <option value="ja-JP">日本語</option>
+      </select>
+    </div>
+  </header>
+
+  <main class="product-page">
+    <!-- 左側篩選工具列 (可擴充) -->
+    <aside class="filter-sidebar">
+      <h2>用途</h2>
+      <div class="filter-item">
+        <input type="checkbox" id="usageDrone" name="usage" value="無人機"/>
+        <label for="usageDrone">無人機</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="usageCar" name="usage" value="汽車"/>
+        <label for="usageCar">汽車</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="usageRobot" name="usage" value="機器人"/>
+        <label for="usageRobot">機器人</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="usageTraffic" name="usage" value="智慧交通"/>
+        <label for="usageTraffic">智慧交通</label>
+      </div>
+      <div class="filter-item">
+        <input type="checkbox" id="usageIndoor" name="usage" value="室內人員"/>
+        <label for="usageIndoor">室內人員</label>
+      </div>
+    
+      <!-- 新增比較清單 -->
+      <div id="compareSidebarBubble" style="display: none;" class="floating-bubble">
+        <h2>比較清單</h2>
+        <ul id="compareList"></ul>
+        <button id="goCompareBtn" class="button hidden" onclick="goComparePage()">前往比較</button>
+      </div>
+      
+    </aside>
+    
+    
+
+    <!-- 中間產品列表（共 11 款） -->
+    <section class="product-list-section">
+      <div class="product-list" id="productList">
+        <!-- 這些卡片可由 script.js 動態產生，但這裡也可先靜態寫或示範。 -->
+        <!-- hover-scale: 滑鼠懸浮時放大效果 -->
+        <!-- data-usage: 以逗號分隔，給篩選功能判斷 -->
+        <!-- 例如 U20: "無人機" 等, H10: "室內人員" 等 -->
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 LuxWave. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
