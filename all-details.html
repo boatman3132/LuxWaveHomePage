@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            max-width: 100vw;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            max-width: 150px;
+            min-width: 150px;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        .floating-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-bubble button {
+            margin: 5px;
+            background-color: #fff;
+            color: #007bff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .floating-bubble button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Radar Product Details</h1>
+    <div class="table-wrapper">
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Dimensions</th>
+                    <th>Weight</th>
+                    <th>Measurement Range</th>
+                    <th>Applications</th>
+                    <th>Voltage</th>
+                    <th>Communication Interface</th>
+                    <th>Frequency Range</th>
+                    <th>Distance Accuracy</th>
+                    <th>FOV Range</th>
+                    <th>Max Targets</th>
+                    <th>Output Data</th>
+                    <th>Waterproof Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Content will be dynamically loaded -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="floating-bubble" id="actionBubble">
+        <button id="compareBtn">Compare</button>
+        <button id="clearBtn">Clear Selection</button>
+    </div>
+
+    <script>
+        const selectedProducts = new Set();
+
+        // Function to load CSV data
+        async function loadCSV() {
+            const response = await fetch('Radar_Product_Details.csv'); // Ensure the CSV file is in the same directory
+            const csvData = await response.text();
+            const rows = csvData.split('\n').slice(1); // Skip header row
+
+            const tableBody = document.querySelector('#productTable tbody');
+
+            rows.forEach(row => {
+                if (row.trim() !== '') {
+                    const cols = row.split(',');
+                    const tr = document.createElement('tr');
+
+                    // Create the Select column with checkbox
+                    const selectCell = document.createElement('td');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = cols[0].trim();
+                    checkbox.addEventListener('change', handleCheckboxChange);
+                    selectCell.appendChild(checkbox);
+                    tr.appendChild(selectCell);
+
+                    // Create a cell for the product image
+                    const productImageCell = document.createElement('td');
+                    const img = document.createElement('img');
+                    img.src = `images/product-${cols[0].trim().toLowerCase()}.png`;
+                    img.alt = cols[0].trim();
+                    productImageCell.appendChild(img);
+                    tr.appendChild(productImageCell);
+
+                    // Create a cell for the product name
+                    const productNameCell = document.createElement('td');
+                    productNameCell.textContent = cols[0].trim();
+                    tr.appendChild(productNameCell);
+
+                    // Add other columns
+                    for (let i = 1; i < cols.length; i++) {
+                        const td = document.createElement('td');
+                        td.textContent = cols[i].trim();
+                        tr.appendChild(td);
+                    }
+
+                    tableBody.appendChild(tr);
+                }
+            });
+        }
+
+        // Handle checkbox change
+        function handleCheckboxChange(event) {
+            const productName = event.target.value;
+
+            if (event.target.checked) {
+                selectedProducts.add(productName);
+            } else {
+                selectedProducts.delete(productName);
+            }
+
+            updateActionBubble();
+        }
+
+        // Update the floating bubble visibility and content
+        function updateActionBubble() {
+            const bubble = document.getElementById('actionBubble');
+            if (selectedProducts.size > 1) {
+                bubble.style.display = 'block';
+            } else {
+                bubble.style.display = 'none';
+            }
+        }
+
+        // Handle Compare button click
+        document.getElementById('compareBtn').addEventListener('click', () => {
+            const selectedArray = Array.from(selectedProducts);
+            const comparisonUrl = `comparison.html?products=${encodeURIComponent(selectedArray.join(','))}`;
+            window.location.href = comparisonUrl;
+        });
+
+        // Handle Clear button click
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            selectedProducts.clear();
+            document.querySelectorAll('#productTable input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateActionBubble();
+        });
+
+        // Load the CSV data on page load
+        document.addEventListener('DOMContentLoaded', loadCSV);
+    </script>
+</body>
+</html>

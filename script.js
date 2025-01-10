@@ -560,3 +560,63 @@ function filterProducts() {
   // 更新比較清單 UI
   updateCompareSidebar();
 }
+function renderAllDetailsPage() {
+  const detailsTable = document.getElementById("detailsTable");
+  const actionButtons = document.getElementById("actionButtons");
+  if (!detailsTable) return; // 不在 all-details.html 時跳過
+
+  const tableHeader = `
+    <tr>
+      <th><input type="checkbox" id="selectAll" onclick="toggleAllSelection()"/></th>
+      <th>型號</th>
+      <th>圖片</th>
+      <th>尺寸</th>
+      <th>質量</th>
+      <th>測量範圍</th>
+      <th>應用</th>
+      <th>輸入電壓</th>
+    </tr>`;
+  let tableRows = "";
+
+  Object.keys(productDatabase).forEach(pid => {
+    const product = productDatabase[pid];
+    tableRows += `
+      <tr>
+        <td><input type="checkbox" class="selectCheckbox" value="${pid}" onclick="updateSelection('${pid}')"/></td>
+        <td>${product.name}</td>
+        <td><img src="${product.img}" alt="${product.name}" style="width:50px;"></td>
+        <td>${product.dimensions}</td>
+        <td>${product.weight}</td>
+        <td>${product.measurementRange}</td>
+        <td>${product.applications}</td>
+        <td>${product.voltage}</td>
+      </tr>`;
+  });
+
+  detailsTable.innerHTML = tableHeader + tableRows;
+
+  // 添加按鈕事件
+  document.getElementById("compareButton").onclick = goComparePage;
+  document.getElementById("clearAllButton").onclick = clearSelection;
+
+  // 顯示按鈕
+  actionButtons.classList.remove("hidden");
+}
+
+function toggleAllSelection() {
+  const checkboxes = document.querySelectorAll(".selectCheckbox");
+  const selectAll = document.getElementById("selectAll");
+  checkboxes.forEach(cb => cb.checked = selectAll.checked);
+  updateSelection();
+}
+
+function updateSelection(pid) {
+  const checkboxes = document.querySelectorAll(".selectCheckbox:checked");
+  compareList = Array.from(checkboxes).map(cb => cb.value);
+}
+
+function clearSelection() {
+  const checkboxes = document.querySelectorAll(".selectCheckbox");
+  checkboxes.forEach(cb => cb.checked = false);
+  compareList = [];
+}

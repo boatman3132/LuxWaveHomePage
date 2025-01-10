@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Comparison</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        img {
+            max-width: 100px;
+            height: auto;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Comparison</h1>
+    <div id="comparisonTableWrapper">
+        <table id="comparisonTable">
+            <thead>
+                <tr>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Dimensions</th>
+                    <th>Weight</th>
+                    <th>Measurement Range</th>
+                    <th>Applications</th>
+                    <th>Voltage</th>
+                    <th>Communication Interface</th>
+                    <th>Frequency Range</th>
+                    <th>Distance Accuracy</th>
+                    <th>FOV Range</th>
+                    <th>Max Targets</th>
+                    <th>Output Data</th>
+                    <th>Waterproof Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically loaded content -->
+            </tbody>
+        </table>
+    </div>
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('products') ? params.get('products').split(',') : [];
+        }
+
+        async function loadComparisonData() {
+            const selectedProducts = getQueryParams(); // 获取 URL 参数
+            console.log('Selected products:', selectedProducts); // 调试选中的产品
+
+            const response = await fetch('Radar_Product_Details.csv');
+            const csvData = await response.text();
+            const rows = csvData.split('\n').slice(1); // 跳过表头
+
+            const tableBody = document.querySelector('#comparisonTable tbody');
+            rows.forEach(row => {
+                if (row.trim() !== '') {
+                    const cols = row.split(',');
+                    const productName = cols[0].trim();
+                    console.log('CSV row:', row); // 调试每行内容
+                    console.log('Product name:', productName); // 调试产品名称
+
+                    if (selectedProducts.includes(productName)) {
+                        const tr = document.createElement('tr');
+
+                        // 创建图片单元格
+                        const imgCell = document.createElement('td');
+                        const img = document.createElement('img');
+                        img.src = `images/product-${productName.toLowerCase()}.png`;
+                        img.alt = productName;
+                        imgCell.appendChild(img);
+                        tr.appendChild(imgCell);
+
+                        // 创建名称单元格
+                        const nameCell = document.createElement('td');
+                        nameCell.textContent = productName;
+                        tr.appendChild(nameCell);
+
+                        // 添加其他列
+                        for (let i = 1; i < cols.length; i++) {
+                            const td = document.createElement('td');
+                            td.textContent = cols[i].trim();
+                            tr.appendChild(td);
+                        }
+
+                        tableBody.appendChild(tr);
+                    }
+                }
+            });
+        }
+
+
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', loadComparisonData);
+    </script>
+</body>
+</html>
