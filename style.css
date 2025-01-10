@@ -539,3 +539,8 @@ video {
   border-radius: 45px; /* 圓角效果，根據需要調整數值 */
   overflow: hidden; /* 確保圓角有效 */
 }
+
+
+.invisible {
+  visibility: hidden;
+}

@@ -1,77 +1,4 @@
-const translations = {
-  "zh-TW": {
-    "siteTitle": "LuxWave 璿機科技",
-    "home": "首頁",
-    "products": "產品介紹",
-    "about": "關於我們",
-    "languageSwitch": "Language",
-    "compareTitle": "產品比較",
-    "contact": "聯繫方式",
-    "heroTitle": "領先的毫米波雷達解決方案",
-    "heroSubtitle": "精準 · 穩定 · 多元應用",
-    "feature1": "高精度偵測",
-    "feature1Desc": "79~81GHz 頻段，探測距離可達 500m，精度高達 0.05m。",
-    "feature2": "多元應用",
-    "feature2Desc": "支援車用、無人機、機器人、智慧交通等多種場景。",
-    "feature3": "高可靠性",
-    "feature3Desc": "IP67 防水等級，在嚴苛環境下仍能穩定運作。",
-    "footerText": "© 2025 LuxWave. All rights reserved."
-  },
-  "zh-CN": {
-    "siteTitle": "LuxWave 璿机科技",
-    "home": "首页",
-    "products": "产品介绍",
-    "about": "关于我们",
-    "languageSwitch": "Language",
-    "compareTitle": "产品比较",
-    "contact": "联系方式",
-    "heroTitle": "领先的毫米波雷达解决方案",
-    "heroSubtitle": "精准 · 稳定 · 多元应用",
-    "feature1": "高精度检测",
-    "feature1Desc": "79~81GHz 频段，探测距离可达 500m，精度高达 0.05m。",
-    "feature2": "多元应用",
-    "feature2Desc": "支持车用、无人机、机器人、智慧交通等多种场景。",
-    "feature3": "高可靠性",
-    "feature3Desc": "IP67 防水等级，在严苛环境下仍能稳定运作。",
-    "footerText": "© 2025 LuxWave. All rights reserved."
-  },
-  "en-US": {
-    "siteTitle": "LuxWave Technology",
-    "home": "Home",
-    "products": "Products",
-    "about": "About Us",
-    "languageSwitch": "Language",
-    "compareTitle": "Product Comparison",
-    "contact": "Contact Us",
-    "heroTitle": "Leading Millimeter-Wave Radar Solutions",
-    "heroSubtitle": "Precision · Stability · Multi-Applications",
-    "feature1": "High Precision Detection",
-    "feature1Desc": "79~81GHz frequency band, range up to 500m, accuracy up to 0.05m.",
-    "feature2": "Multi-Application",
-    "feature2Desc": "Supports automotive, drones, robots, and smart traffic.",
-    "feature3": "High Reliability",
-    "feature3Desc": "IP67 waterproof, stable in harsh environments.",
-    "footerText": "© 2025 LuxWave. All rights reserved."
-  },
-  "ja-JP": {
-    "siteTitle": "LuxWave 株式会社",
-    "home": "ホーム",
-    "products": "製品紹介",
-    "about": "会社概要",
-    "languageSwitch": "Language",
-    "compareTitle": "製品比較",
-    "contact": "お問い合わせ",
-    "heroTitle": "先進的なミリ波レーダーソリューション",
-    "heroSubtitle": "精密 · 安定 · 多用途",
-    "feature1": "高精度検出",
-    "feature1Desc": "79~81GHz帯域、検出距離は500m、精度は0.05mまで。",
-    "feature2": "多用途",
-    "feature2Desc": "自動車、ドローン、ロボット、スマート交通をサポート。",
-    "feature3": "高信頼性",
-    "feature3Desc": "IP67防水、厳しい環境でも安定動作。",
-    "footerText": "© 2025 LuxWave. All rights reserved."
-  }
-};
+
 
 
 
@@ -364,6 +291,9 @@ function initLanguageSelect() {
     const savedLang = localStorage.getItem("selectedLanguage") || "zh-TW";
     languageSelect.value = savedLang;
     applyTranslations(savedLang);
+
+    // 翻譯完成後移除隱藏
+    document.body.classList.remove("invisible");
   }
 }
 

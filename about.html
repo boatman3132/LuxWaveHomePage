@@ -7,7 +7,7 @@
   <link rel="icon" href="images/favicon.png" type="image/png"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
+<body class="invisible">
     <header class="site-header">
         <div class="logo-area">
           <a href="index.html">
@@ -35,30 +35,31 @@
 
   <main class="about-page">
     <section class="company-intro">
-      <h2>公司簡介</h2>
-      <p>
-        LuxWave 為全球領先的毫米波雷達解決方案提供商，致力於推動自動化與安全監測應用。
-        我們擁有一支經驗豐富的研發團隊，核心技術涵蓋硬體設計、訊號處理與 AI 演算法。
-      </p>
-    </section>
-    <section class="company-values">
-      <h2>企業理念</h2>
-      <ul>
-        <li>追求卓越：持續創新與技術突破</li>
-        <li>以人為本：關注使用者體驗與實際場景</li>
-        <li>永續經營：與合作夥伴共創未來</li>
-      </ul>
-    </section>
-    <section class="company-history">
-      <h2>發展歷程</h2>
-      <p>2018年成立，專注於車用毫米波雷達…(此處可放年表或里程碑)</p>
-    </section>
-    <section class="contact-info">
-      <h2>聯繫方式</h2>
-      <p>Email: samuel763@gmail.com</p>
-      <p>電話: +886 935548787</p>
-      <br></br>
+        <h2 data-i18n="companyIntroTitle">公司簡介</h2>
+        <p data-i18n="companyIntroDesc">
+          LuxWave 為全球領先的毫米波雷達解決方案提供商，致力於推動自動化與安全監測應用。
+          我們擁有一支經驗豐富的研發團隊，核心技術涵蓋硬體設計、訊號處理與 AI 演算法。
+        </p>
+      </section>
+      <section class="company-values">
+        <h2 data-i18n="companyValuesTitle">企業理念</h2>
+        <ul>
+          <li data-i18n="valueExcellence">追求卓越：持續創新與技術突破</li>
+          <li data-i18n="valueHumanCentered">以人為本：關注使用者體驗與實際場景</li>
+          <li data-i18n="valueSustainability">永續經營：與合作夥伴共創未來</li>
+        </ul>
+      </section>
+      <section class="company-history">
+        <h2 data-i18n="companyHistoryTitle">發展歷程</h2>
+        <p data-i18n="companyHistoryDesc">2018年成立，專注於車用毫米波雷達…(此處可放年表或里程碑)</p>
+      </section>
 
+      
+      <section class="contact-info">
+        <h2 data-i18n="contactInfoTitle">聯繫方式</h2>
+        <p data-i18n="contactEmail">Email: samuel763@gmail.com</p>
+        <p data-i18n="contactPhone">電話: +886 935548787</p>
+      
         <!-- 嵌入 Google 地圖 -->
     <h2>地圖位置</h2>
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14453.679085297097!2d121.51772739200439!3d25.08764796869419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442aeb9be771d11%3A0x5bb870c52d359c9c!2zMTEx5Y-w5YyX5biC5aOr5p6X5Y2A5Lit5q2j6LevNDk16Jmf!5e0!3m2!1szh-TW!2stw!4v1736410121466!5m2!1szh-TW!2stw" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -69,7 +70,7 @@
   <footer class="site-footer">
     <p>© 2025 LuxWave. All rights reserved.</p>
   </footer>
-
+  <script src="translations.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
