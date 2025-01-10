@@ -27,6 +27,7 @@ const translations = {
       "contactInfoTitle": "聯繫方式",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "電話: +886 935548787",
+      "mapLocation": "地圖位置"
     },
     "zh-CN": {
       "siteTitle": "LuxWave 璿机科技",
@@ -55,7 +56,8 @@ const translations = {
       "companyHistoryDesc": "2018年成立，专注于车用毫米波雷达…(此处可放年表或里程碑)",
       "contactInfoTitle": "联系方式",
       "contactEmail": "Email: samuel763@gmail.com",
-      "contactPhone": "电话: +886 935548787"
+      "contactPhone": "电话: +886 935548787",
+      "mapLocation": "地图位置"
     },
     "en-US": {
       "siteTitle": "LuxWave Technology",
@@ -84,7 +86,9 @@ const translations = {
       "companyHistoryDesc": "Established in 2018, specializing in automotive millimeter-wave radar... (Insert timeline or milestones here)",
       "contactInfoTitle": "Contact Information",
       "contactEmail": "Email: samuel763@gmail.com",
-      "contactPhone": "Phone: +886 935548787"
+      "contactPhone": "Phone: +886 935548787",
+      "mapLocation": "Map location"
+
     },
     "ja-JP": {
       "siteTitle": "LuxWave 株式会社",
@@ -113,6 +117,8 @@ const translations = {
       "companyHistoryDesc": "2018年設立、自動車用ミリ波レーダーに特化...(ここに年表やマイルストーンを挿入)",
       "contactInfoTitle": "連絡先",
       "contactEmail": "Email: samuel763@gmail.com",
-      "contactPhone": "電話: +886 935548787"
+      "contactPhone": "電話: +886 935548787",
+      "mapLocation": "地図"
+
     }
   };
