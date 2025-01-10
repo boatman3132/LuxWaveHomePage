@@ -7,45 +7,102 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            height: 100vh; /* 限制高度 */
+            overflow: hidden; /* 禁止整頁滾動 */
         }
+
+        .comparison-wrapper {
+            width: 100%;
+            height: 80%;
+            overflow: auto; /* 添加表格滾動 */
+            border: 1px solid #ddd;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
         }
+
         th, td {
-            border: 1px solid #ddd;
+            border: 0px solid #ddd;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f4f4f4;
+            position: sticky;
+            top: 0; /* 固定表頭 */
+            z-index: 3;
         }
+
+        td:first-child, th:first-child {
+            position: sticky;
+            left: 0; /* 固定第一列 */
+            z-index: 2;
+            background-color: #f4f4f4; /* 背景色與表頭一致 */
+        }
+
+        th:first-child {
+            z-index: 4; /* 確保左上角單元格優先顯示 */
+        }
+
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
         img {
             max-width: 100px;
             height: auto;
         }
-        .back-button {
-            margin-top: 20px;
+
+        .button-container {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* 初始隱藏 */
+            gap: 10px;
+        }
+
+        .action-button {
             padding: 10px 20px;
             background-color: #007bff;
             color: #fff;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
         }
-        .back-button:hover {
+
+        .action-button:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #448bcf;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
     <h1>Product Comparison</h1>
-    <div id="comparisonTableWrapper">
+    <div class="comparison-wrapper">
         <table id="comparisonTable">
             <thead>
                 <tr>
@@ -70,6 +127,10 @@
             </tbody>
         </table>
     </div>
+    <div class="button-container" id="buttonContainer">
+        <button class="action-button" id="compareButton">Compare</button>
+        <button class="action-button" id="clearSelectionButton">Clear Selection</button>
+    </div>
     <button class="back-button" onclick="goBack()">Back</button>
 
     <script>
@@ -79,25 +140,21 @@
         }
 
         async function loadComparisonData() {
-            const selectedProducts = getQueryParams(); // 获取 URL 参数
-            console.log('Selected products:', selectedProducts); // 调试选中的产品
-
+            const selectedProducts = getQueryParams();
             const response = await fetch('Radar_Product_Details.csv');
             const csvData = await response.text();
-            const rows = csvData.split('\n').slice(1); // 跳过表头
-
+            const rows = csvData.split('\n').slice(1); // 跳過表頭
             const tableBody = document.querySelector('#comparisonTable tbody');
+
             rows.forEach(row => {
                 if (row.trim() !== '') {
                     const cols = row.split(',');
                     const productName = cols[0].trim();
-                    console.log('CSV row:', row); // 调试每行内容
-                    console.log('Product name:', productName); // 调试产品名称
 
                     if (selectedProducts.includes(productName)) {
                         const tr = document.createElement('tr');
 
-                        // 创建图片单元格
+                        // 圖片列
                         const imgCell = document.createElement('td');
                         const img = document.createElement('img');
                         img.src = `images/product-${productName.toLowerCase()}.png`;
@@ -105,12 +162,12 @@
                         imgCell.appendChild(img);
                         tr.appendChild(imgCell);
 
-                        // 创建名称单元格
+                        // 名稱列
                         const nameCell = document.createElement('td');
                         nameCell.textContent = productName;
                         tr.appendChild(nameCell);
 
-                        // 添加其他列
+                        // 其他列
                         for (let i = 1; i < cols.length; i++) {
                             const td = document.createElement('td');
                             td.textContent = cols[i].trim();
@@ -123,10 +180,28 @@
             });
         }
 
-
         function goBack() {
             window.history.back();
         }
+
+        function toggleButtons(selectedCount) {
+            const buttonContainer = document.getElementById('buttonContainer');
+            if (selectedCount >= 2) {
+                buttonContainer.style.display = 'flex';
+            } else {
+                buttonContainer.style.display = 'none';
+            }
+        }
+
+        // 假設用戶可以選擇產品 (例如勾選複選框)
+        let selectedCount = 0; // 預設選擇數量
+
+        document.addEventListener('change', event => {
+            if (event.target.classList.contains('product-checkbox')) {
+                selectedCount += event.target.checked ? 1 : -1;
+                toggleButtons(selectedCount);
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', loadComparisonData);
     </script>
