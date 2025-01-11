@@ -192,20 +192,18 @@
   </footer>
 
   <script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
-    // 預設語言
-    const languageSelect = document.getElementById('languageSelect');
-    const defaultLanguage = languageSelect.value;
+// 當語言選擇變更時
+languageSelect.addEventListener('change', (event) => {
+    const selectedLanguage = event.target.value;
+    localStorage.setItem('selectedLanguage', selectedLanguage); // 更新本地儲存
+    loadCSV(selectedLanguage); // 重新載入對應語言的 CSV 檔案
+});
 
-    // 初始化時載入對應語言的 CSV
-    loadCSV(defaultLanguage);
-
-    // 當使用者改變語言時，重新載入表格
-    languageSelect.addEventListener('change', (event) => {
-        const selectedLanguage = event.target.value;
-        loadCSV(selectedLanguage);
-    });
+// 頁面加載時初始化語言
+document.addEventListener('DOMContentLoaded', () => {
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'zh-TW';
+    languageSelect.value = savedLanguage;
+    loadCSV(savedLanguage);
 });
 
 // Function to load CSV data
