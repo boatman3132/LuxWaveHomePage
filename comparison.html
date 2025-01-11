@@ -101,7 +101,6 @@
     </style>
 </head>
 <body>
-    <h1>Product Comparison</h1>
     <div class="comparison-wrapper">
         <table id="comparisonTable">
             <thead>
@@ -141,7 +140,7 @@
 
         async function loadComparisonData() {
             const selectedProducts = getQueryParams();
-            const response = await fetch('Radar_Product_Details.csv');
+            const response = await fetch('Radar_Product_Details-zh-tw.csv');
             const csvData = await response.text();
             const rows = csvData.split('\n').slice(1); // 跳過表頭
             const tableBody = document.querySelector('#comparisonTable tbody');

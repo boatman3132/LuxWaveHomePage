@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radar Product Details</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxWave 毫米波雷達 | 關於我們</title>
+  <link rel="icon" href="images/favicon.png" type="image/png"/>
+  <link rel="stylesheet" href="style.css"/>
     <style>
+        /* 修正頁面樣式 */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             height: 100vh;
-            overflow: hidden;
+            /* overflow: hidden; 禁止整個頁面滾動 */
         }
 
         .table-wrapper {
-            max-width: 100%;
-            max-height: 80%;
-            overflow: auto;
+            width: 100%;
+            max-height: 80vh;  /* 限制表格容器最大高度 */
+            overflow-y: auto;  /* 只允許垂直滾動 */
             border: 1px solid #ddd;
         }
 
@@ -29,8 +32,6 @@
             border: 0px solid #ddd;
             padding: 8px;
             text-align: left;
-            max-width: 150px;
-            min-width: 150px;
         }
 
         th {
@@ -62,14 +63,10 @@
             margin: 0 auto;
         }
 
-        .product-cell {
-            text-align: center;
-        }
-
         .floating-bubble {
             position: fixed;
-            bottom: 20px; /* 靠近底部 */
-            left: 20px; /* 靠近左側 */
+            bottom: 20px;
+            left: 20px;
             display: flex;
             gap: 10px;
             z-index: 10;
@@ -98,7 +95,34 @@
         }
     </style>
 </head>
-<body>
+
+<!-- class="invisible" -->
+<body >
+    <header class="site-header">
+        <div class="logo-area">
+          <a href="index.html">
+            <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
+          </a>
+          <h1 class="site-title" data-i18n="siteTitle">LuxWave 璿機科技</h1>
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html" class="gradient-btn" data-i18n="home">首頁</a></li>
+            <li><a href="products.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
+            <li><a href="about.html" class="gradient-btn active" data-i18n="about">關於我們</a></li>
+          </ul>
+        </nav>
+        <div class="language-switch">
+          <label data-i18n="languageSwitch">Language</label>
+          <select id="languageSelect">
+            <option value="zh-TW">繁體中文</option>
+            <option value="zh-CN">简体中文</option>
+            <option value="en-US">English</option>
+            <option value="ja-JP">日本語</option>
+          </select>
+        </div>
+      </header>
+
     <h1>Radar Product Details</h1>
     <div class="table-wrapper">
         <table id="productTable">
