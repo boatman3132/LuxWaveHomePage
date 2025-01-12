@@ -14,7 +14,7 @@
 
         .comparison-wrapper {
             width: 100%;
-            height: 80%;
+            height: 90%;
             overflow: auto; /* 添加表格滾動 */
             border: 1px solid #ddd;
         }
@@ -126,40 +126,56 @@
             const selectedProducts = getQueryParams();
             const response = await fetch('Radar_Product_Details-zh-tw.csv');
             const csvData = await response.text();
-            const rows = csvData.split('\n').slice(1); // 跳過表頭
+            const rows = csvData.split('\n');
+            const tableHead = document.querySelector('#comparisonTable thead');
             const tableBody = document.querySelector('#comparisonTable tbody');
 
-            rows.forEach(row => {
+            // Extract the header row
+            const headerRow = rows[0].split(',');
+
+            // Process the rest of the rows
+            const productData = [];
+            rows.slice(1).forEach(row => {
                 if (row.trim() !== '') {
                     const cols = row.split(',');
                     const productName = cols[0].trim();
 
                     if (selectedProducts.includes(productName)) {
-                        const tr = document.createElement('tr');
-
-                        // 圖片列
-                        const imgCell = document.createElement('td');
-                        const img = document.createElement('img');
-                        img.src = `images/product-${productName.toLowerCase()}.png`;
-                        img.alt = productName;
-                        imgCell.appendChild(img);
-                        tr.appendChild(imgCell);
-
-                        // 名稱列
-                        const nameCell = document.createElement('td');
-                        nameCell.textContent = productName;
-                        tr.appendChild(nameCell);
-
-                        // 其他列
-                        for (let i = 1; i < cols.length; i++) {
-                            const td = document.createElement('td');
-                            td.textContent = cols[i].trim();
-                            tr.appendChild(td);
-                        }
-
-                        tableBody.appendChild(tr);
+                        productData.push(cols); // Store data for each selected product
                     }
                 }
+            });
+
+            // Create rows for each feature
+            headerRow.forEach((header, headerIndex) => {
+                const tr = document.createElement('tr');
+
+                // First column: Header
+                const headerCell = document.createElement('td');
+                headerCell.textContent = header.trim();
+                headerCell.style.fontWeight = 'bold'; // Make headers bold
+                tr.appendChild(headerCell);
+
+                // Subsequent columns: Product data
+                productData.forEach(productCols => {
+                    const dataCell = document.createElement('td');
+                    if (headerIndex === 0) {
+                        // For the first header (product name), add the image and product name
+                        const img = document.createElement('img');
+                        img.src = `images/product-${productCols[0].toLowerCase()}.png`;
+                        img.alt = productCols[0];
+                        dataCell.appendChild(img);
+                        const productName = document.createElement('div');
+                        productName.textContent = productCols[0];
+                        dataCell.appendChild(productName);
+                    } else {
+                        // For other headers, add the corresponding data
+                        dataCell.textContent = productCols[headerIndex]?.trim() || '';
+                    }
+                    tr.appendChild(dataCell);
+                });
+
+                tableBody.appendChild(tr);
             });
         }
 
@@ -189,4 +205,4 @@
         document.addEventListener('DOMContentLoaded', loadComparisonData);
     </script>
 </body>
-</html>
+</html
