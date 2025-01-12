@@ -180,11 +180,11 @@
         <button id="compareBtn">Compare</button>
         <button id="clearBtn">Clear Selection</button>
     </div>
-          
+
 
 
     </section>
-      
+
   </main>
 
   <footer class="site-footer">
@@ -304,6 +304,7 @@ function populateTable(csvData) {
 
 
 // Handle checkbox change
+// Handle checkbox change
 const selectedProducts = new Set();
 
 function handleCheckboxChange(event) {
@@ -313,6 +314,19 @@ function handleCheckboxChange(event) {
         selectedProducts.add(productName);
     } else {
         selectedProducts.delete(productName);
+    }
+
+    // 檢查選取的產品數量
+    updateBubbleVisibility();
+}
+
+// 更新氣泡按鈕的可見性
+function updateBubbleVisibility() {
+    const actionBubble = document.getElementById('actionBubble');
+    if (selectedProducts.size >= 2) {
+        actionBubble.style.display = 'flex'; // 顯示氣泡按鈕
+    } else {
+        actionBubble.style.display = 'none'; // 隱藏氣泡按鈕
     }
 }
 
@@ -329,6 +343,12 @@ document.getElementById('clearBtn').addEventListener('click', () => {
     document.querySelectorAll('#productTable input[type="checkbox"]').forEach(checkbox => {
         checkbox.checked = false;
     });
+    updateBubbleVisibility(); // 清除選擇後更新氣泡按鈕的可見性
+});
+
+// 頁面加載時初始化氣泡按鈕的可見性
+document.addEventListener('DOMContentLoaded', () => {
+    updateBubbleVisibility();
 });
 
 </script>
