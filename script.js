@@ -620,3 +620,15 @@ function clearSelection() {
   checkboxes.forEach(cb => cb.checked = false);
   compareList = [];
 }
+
+
+// 更新 DOMContentLoaded 事件
+window.addEventListener("DOMContentLoaded", () => {
+  initLanguageSelect();
+  initProductFilter();
+  renderProductList();
+  renderProductDetail();
+  initCompareTable();
+  updateCompareSidebar();
+  initMobileMenu(); // 新增
+});

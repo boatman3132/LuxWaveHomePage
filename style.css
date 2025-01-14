@@ -512,27 +512,94 @@ body {
 .contact-info {
   margin-bottom: 2rem;
 }
+/* ... existing code ... */
 
-/* 響應式 */
-@media screen and (max-width: 768px) {
-  .product-card {
-    width: calc(50% - 1rem);
-  }
-}
-@media screen and (max-width: 480px) {
-  .product-page {
+@media screen and (max-width: 960px) {
+  .site-header {
     flex-direction: column;
+    padding: 0.5rem;
   }
-  .filter-sidebar,
-  .compare-sidebar {
+
+  .logo {
+    height: 60px;
+  }
+
+  .site-title {
+    font-size: 1.2rem;
+  }
+
+  .main-nav {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .main-nav ul {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .main-nav a {
+    padding: 0.3rem 0.8rem;
+  }
+
+  .language-switch {
+    margin-top: 0.5rem;
+  }
+
+  .hero-content {
+    padding: 1rem;
+  }
+
+  .hero-content video {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+  }
+
+  .feature-cards {
+    padding: 0.5rem;
+  }
+
+  .card {
     width: 100%;
     margin-bottom: 1rem;
   }
-  .product-card {
-    width: 100%;
+
+  .floating-bubble {
+    width: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
   }
 }
 
+@media screen and (max-width: 480px) {
+  .logo-area {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .site-title {
+    margin-top: 0.5rem;
+  }
+
+  .main-nav ul {
+    gap: 0.5rem;
+  }
+
+  .main-nav a {
+    font-size: 0.9rem;
+  }
+
+  .hero h2 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+}
 
 
 video {
