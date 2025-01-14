@@ -28,7 +28,10 @@ const translations = {
       "contactInfoTitle": "聯繫方式",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "電話: +886 935548787",
-      "mapLocation": "地圖位置"
+      "mapLocation": "地圖位置",
+      "backButton": "返回",
+
+
     },
     "zh-CN": {
       "siteTitle": "LuxWave 璿机科技",
@@ -59,7 +62,8 @@ const translations = {
       "contactInfoTitle": "联系方式",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "电话: +886 935548787",
-      "mapLocation": "地图位置"
+      "mapLocation": "地图位置",
+      "backButton": "返回"
     },
     "en-US": {
       "siteTitle": "LuxWave Technology",
@@ -90,7 +94,8 @@ const translations = {
       "contactInfoTitle": "Contact Information",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "Phone: +886 935548787",
-      "mapLocation": "Map location"
+      "mapLocation": "Map location",
+      "backButton": "Back"
 
     },
     "ja-JP": {
@@ -122,7 +127,8 @@ const translations = {
       "contactInfoTitle": "連絡先",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "電話: +886 935548787",
-      "mapLocation": "地図"
+      "mapLocation": "地図",
+      "backButton": "戻る",
 
     }
   };
