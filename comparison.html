@@ -1,277 +1,248 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxWave 毫米波雷達 | 產品比較</title>
-    <link rel="icon" href="images/favicon.png" type="image/png" />
-    <link rel="stylesheet" href="style.css" />
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-        }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxWave 毫米波雷達 | 產品比較</title>
+  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* 全局樣式 */
+    :root {
+      --accent-color: #2563eb;
+      --hover-accent: #1d4ed8;
+    }
 
-        .comparison-wrapper {
-            width: 100%;
-            height: 90%;
-            overflow: auto;
-            border: 1px solid #ddd;
-        }
+    /* 主要布局 */
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      background-color: #f8fafc;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    /* 比較表格容器 */
+    .comparison-table-container {
+      width: 100%;
+      max-width: 1200px;
+      overflow-x: auto; /* 如果表格過寬，允許水平滾動 */
+    }
 
-        th, td {
-            border: 0px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+    /* 比較表格 */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-        th {
-            background-color: #f4f4f4;
-            position: sticky;
-            top: 0;
-            z-index: 3;
-        }
+    .comparison-table th,
+    .comparison-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
 
-        td:first-child, th:first-child {
-            position: sticky;
-            left: 0;
-            z-index: 2;
-            background-color: #f4f4f4;
-        }
+    .comparison-table th {
+      background-color: #f1f5f9;
+      font-weight: 600;
+      color: #1e293b;
+      white-space: nowrap; /* 防止表頭文字換行 */
+    }
 
-        th:first-child {
-            min-width: 200px;
-            z-index: 4;
-        }
+    .comparison-table td {
+      color: #4b5563;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+    .comparison-table tr:hover {
+      background-color: #f8fafc;
+    }
 
-        img {
-            max-width: 100px;
-            height: auto;
-        }
+    /* 產品圖片 */
+    .product-image {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      border-radius: 0.5rem;
+    }
 
-        .button-container {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-            gap: 10px;
-        }
+    /* 返回按鈕 */
+    .back-btn {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      margin-top: 2rem;
+    }
 
-        .action-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s, transform 0.3s;
-        }
+    .back-btn:hover {
+      background-color: var(--hover-accent);
+      transform: translateY(-1px);
+    }
 
-        .action-button:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        /* 修改產品圖片的樣式，避免與 logo 樣式衝突 */
-        .comparison-wrapper img {
-            max-width: 100px;
-            height: auto;
-        }
-
-        /* 移除原有的通用圖片樣式 */
-        img {
-            max-width: none;
-            height: auto;
-        }
-
-        /* Logo 樣式 */
-        .logo-area {
-            display: flex;
-            align-items: center;
-        }
-        
-
-        .logo {
-            height: 80px;
-            width: auto;
-            margin-right: 0.5rem;
-        }
-
-        .site-title {
-            font-size: 1.5rem;
-        }
-    </style>
+    .back-btn:active {
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body class="invisible">
-    <header class="site-header">
-        <div class="logo-area">
-            <a href="index.html">
-                <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
-            </a>
-            <h1 class="site-title" data-i18n="siteTitle">LuxWave 璿機科技</h1>
-        </div>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="index.html" class="gradient-btn" data-i18n="home">首頁</a></li>
-                <li><a href="products.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
-                <li><a href="products-detail.html" class="gradient-btn active" data-i18n="products-detail">產品詳情介紹</a></li>
-                <li><a href="about.html" class="gradient-btn" data-i18n="about">關於我們</a></li>
-            </ul>
-        </nav>
-        <div class="language-switch">
-            <label data-i18n="languageSwitch">Language</label>
-            <select id="languageSelect">
-                <option value="zh-TW">繁體中文</option>
-                <option value="zh-CN">简体中文</option>
-                <option value="en-US">English</option>
-                <option value="ja-JP">日本語</option>
-            </select>
-        </div>
-    </header>
-
-    <div class="comparison-wrapper">
-        <table id="comparisonTable">
-            <thead>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+  <header class="site-header">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
+      </a>
+      <h1 class="site-title" data-i18n="siteTitle">LuxWave 璿機科技</h1>
     </div>
-    
-    <div class="button-container" id="buttonContainer">
-        <button class="action-button" id="compareButton">Compare</button>
-        <button class="action-button" id="clearSelectionButton">Clear Selection</button>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html" class="gradient-btn" data-i18n="home">首頁</a></li>
+        <li><a href="products.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
+        <li><a href="products-detail.html" class="gradient-btn" data-i18n="products-detail">產品詳情介紹</a></li>
+        <li><a href="about.html" class="gradient-btn" data-i18n="about">關於我們</a></li>
+      </ul>
+    </nav>
+    <div class="language-switch">
+      <label data-i18n="languageSwitch">Language</label>
+      <select id="languageSelect">
+        <option value="zh-TW">繁體中文</option>
+        <option value="zh-CN">简体中文</option>
+        <option value="en-US">English</option>
+        <option value="ja-JP">日本語</option>
+      </select>
     </div>
+  </header>
 
+  <main>
+    <!-- <h1 data-i18n="compareTitle">產品比較</h1> -->
+    <div class="comparison-table-container">
+      <table class="comparison-table" id="comparison-table">
+        <thead>
+          <tr>
+            <!-- 產品名稱將動態插入這裡 -->
+          </tr>
+        </thead>
+        <tbody id="comparison-body">
+          <!-- 產品比較數據將動態插入這裡 -->
+        </tbody>
+      </table>
+    </div>
+    <button class="back-btn" onclick="window.location.href='products.html'" data-i18n="backButton">返回產品列表</button>
+  </main>
 
-    <footer class="site-footer">
-        <p data-i18n="footerText">© 2025 LuxWave. All rights reserved.</p>
-    </footer>
+  <footer class="site-footer">
+    <p>© 2025 LuxWave. All rights reserved.</p>
+  </footer>
 
-    <script src="translations.js"></script>
-    <script src="script.js"></script>
-    <script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 從 URL 獲取要比較的產品名稱
+      const urlParams = new URLSearchParams(window.location.search);
+      const productsToCompare = urlParams.get('products').split(',');
+
+      // 載入產品數據
+      loadProducts().then(products => {
+        // 過濾出要比較的產品
+        const filteredProducts = products.filter(product => 
+          productsToCompare.includes(product['Product Name'])
+        );
+
+        // 渲染比較表格
+        renderComparisonTable(filteredProducts);
         
-        function getQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('products') ? params.get('products').split(',') : [];
-        }
+        // 讓 body 顯示
+        document.body.classList.remove('invisible');
+      });
 
-        async function loadComparisonData() {
-            const selectedProducts = getQueryParams();
-            const currentLang = document.getElementById('languageSelect').value;
-            const response = await fetch(`Radar_Product_Details-${currentLang}.csv`);
-                        const csvData = await response.text();
+      // 載入產品數據
+      async function loadProducts() {
+        try {
+          const response = await fetch('Radar_Product_Details-en-us.csv');
+          if (!response.ok) {
+            console.error('無法載入產品數據');
+            return;
+          }
 
-        // 語言切換監聽器
-        document.getElementById('languageSelect').addEventListener('change', function(e) {
-            const newLang = e.target.value;
-            // 保存語言偏好到 localStorage
-            localStorage.setItem('selectedLanguage', newLang);
-            
-            // 清除並重新載入比較表格
-            const tableHead = document.querySelector('#comparisonTable thead');
-            const tableBody = document.querySelector('#comparisonTable tbody');
-            tableHead.innerHTML = '';
-            tableBody.innerHTML = '';
-            
-            // 重新載入數據
-            loadComparisonData();
-            
-            // 更新其他頁面內容
-            updateContent(newLang);
+          const data = await response.text();
+          const rows = data.split("\n").filter(row => row.trim() !== "");
+          const headers = rows[0].split(",").map(header => header.trim());
+
+          // 建立 products 陣列
+          const products = rows.slice(1).map(row => {
+            const values = row.split(",").map(v => v.trim());
+            const product = {};
+            headers.forEach((header, index) => {
+              product[header] = values[index] || "N/A";
             });
-            const rows = csvData.split('\n');
-            const tableHead = document.querySelector('#comparisonTable thead');
-            const tableBody = document.querySelector('#comparisonTable tbody');
+            return product;
+          });
 
-            const headerRow = rows[0].split(',');
-
-            const productData = [];
-            rows.slice(1).forEach(row => {
-                if (row.trim() !== '') {
-                    const cols = row.split(',');
-                    const productName = cols[0].trim();
-
-                    if (selectedProducts.includes(productName)) {
-                        productData.push(cols);
-                    }
-                }
-            });
-
-            headerRow.forEach((header, headerIndex) => {
-                const tr = document.createElement('tr');
-
-                const headerCell = document.createElement('td');
-                headerCell.textContent = header.trim();
-                headerCell.style.fontWeight = 'bold';
-                tr.appendChild(headerCell);
-
-                productData.forEach(productCols => {
-                    const dataCell = document.createElement('td');
-                    if (headerIndex === 0) {
-                        const img = document.createElement('img');
-                        img.src = `images/product-${productCols[0].toLowerCase()}.png`;
-                        img.alt = productCols[0];
-                        dataCell.appendChild(img);
-                        const productName = document.createElement('div');
-                        productName.textContent = productCols[0];
-                        dataCell.appendChild(productName);
-                    } else {
-                        dataCell.textContent = productCols[headerIndex]?.trim() || '';
-                    }
-                    tr.appendChild(dataCell);
-                });
-
-                tableBody.appendChild(tr);
-            });
+          return products;
+        } catch (error) {
+          console.error("載入產品資料時發生錯誤：", error);
         }
+      }
 
-        function toggleButtons(selectedCount) {
-            const buttonContainer = document.getElementById('buttonContainer');
-            if (selectedCount >= 2) {
-                buttonContainer.style.display = 'flex';
-            } else {
-                buttonContainer.style.display = 'none';
-            }
-        }
+      // 渲染比較表格
+      function renderComparisonTable(products) {
+        const table = document.getElementById('comparison-table');
+        const tbody = document.getElementById('comparison-body');
+        tbody.innerHTML = '';
 
-        let selectedCount = 0;
+        // 定義要顯示的屬性順序
+        const attributes = [
+          'Product Name',
+          'Dimensions',
+          'Weight',
+          'Measurement Range',
+          'Applications',
+          'Voltage',
+          'Communication Interface',
+          'Frequency Range',
+          'Distance Accuracy',
+          'FOV Range',
+          'Max Targets',
+          'Output Data',
+          'Waterproof Rating'
+        ];
 
-        document.addEventListener('change', event => {
-            if (event.target.classList.contains('product-checkbox')) {
-                selectedCount += event.target.checked ? 1 : -1;
-                toggleButtons(selectedCount);
-            }
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            // 從 localStorage 獲取保存的語言設置
-            const savedLanguage = localStorage.getItem('selectedLanguage');
-            
-            if (savedLanguage) {
-                // 設置語言選擇下拉選單的值
-                const languageSelect = document.getElementById('languageSelect');
-                languageSelect.value = savedLanguage;
-                
-                // 更新頁面內容為保存的語言
-                updateContent(savedLanguage);
-            }
-            
-            // 載入比較數據
+        // 添加表頭（產品名稱）
+        const headerRow = table.querySelector('thead tr');
+        headerRow.innerHTML = '<th> </th>'; // 重置表頭
+        products.forEach(product => {
+          headerRow.innerHTML += `<th>${product['Product Name']}</th>`;
         });
 
-        document.addEventListener('DOMContentLoaded', loadComparisonData);
-    </script>
+        // 添加表格內容
+        attributes.forEach(attr => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
+
+          products.forEach(product => {
+            let value = product[attr];
+            if (attr === 'Product Name') {
+              // 如果是產品名稱，顯示圖片
+              value = `
+                <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
+                     alt="${product['Product Name']}" 
+                     class="product-image">
+              `;
+            }
+            row.innerHTML += `<td>${value}</td>`;
+          });
+
+          tbody.appendChild(row);
+        });
+      }
+    });
+  </script>
+
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
