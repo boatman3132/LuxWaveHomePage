@@ -1,6 +1,6 @@
 const translations = {
     "zh-TW": {
-      "siteTitle": "LuxWave 璿機科技",
+      "siteTitle": "璿機科技",
       "home": "首頁",
       "products": "產品介紹",
       "products-detail": "產品詳情介紹",
@@ -34,7 +34,7 @@ const translations = {
 
     },
     "zh-CN": {
-      "siteTitle": "LuxWave 璿机科技",
+      "siteTitle": "璿机科技",
       "home": "首页",
       "products": "产品介绍",
       "products-detail": "产品详细介绍",
@@ -66,7 +66,7 @@ const translations = {
       "backButton": "返回"
     },
     "en-US": {
-      "siteTitle": "LuxWave Technology",
+      "siteTitle": " ",
       "home": "Home",
       "products": "Products",
       "products-detail": "Product Details",
@@ -99,7 +99,7 @@ const translations = {
 
     },
     "ja-JP": {
-      "siteTitle": "LuxWave 株式会社",
+      "siteTitle": " ",
       "home": "ホーム",
       "products": "製品紹介",
       "products-detail": "製品詳細",
