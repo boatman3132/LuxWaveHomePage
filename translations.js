@@ -30,6 +30,13 @@ const translations = {
       "contactPhone": "電話: +886 935548787",
       "mapLocation": "地圖位置",
       "backButton": "返回",
+      addButton: '加入比較',
+      "filterTitle": "應用篩選",
+      "compareButton": "比較產品",
+      measurementRange: '測量範圍',
+      dimensions: '尺寸',
+      frequencyRange: '頻率範圍',
+
 
 
     },
@@ -63,7 +70,10 @@ const translations = {
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "电话: +886 935548787",
       "mapLocation": "地图位置",
-      "backButton": "返回"
+      "backButton": "返回",
+      addButton: '加入比较',
+      "filterTitle": "应用筛选",
+      "compareButton": "比较产品",
     },
     "en-US": {
       "siteTitle": " ",
@@ -95,7 +105,10 @@ const translations = {
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "Phone: +886 935548787",
       "mapLocation": "Map location",
-      "backButton": "Back"
+      "backButton": "Back",
+      addButton: 'Add to Compare',
+      "filterTitle": "Application Filter",
+      "compareButton": "Compare Products",
 
     },
     "ja-JP": {
@@ -129,6 +142,9 @@ const translations = {
       "contactPhone": "電話: +886 935548787",
       "mapLocation": "地図",
       "backButton": "戻る",
+      addButton: '比較に追加',
+      "filterTitle": "アプリケーションフィルター",
+      "compareButton": "製品比較",
 
     }
   };

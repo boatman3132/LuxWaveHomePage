@@ -24,12 +24,12 @@ main {
 
 /* 左側篩選側邊欄 */
 .filter-sidebar {
-  background: linear-gradient(to bottom, #ffffff, #f8fafc);
-  border-right: 1px solid #e2e8f0;
   padding: 2rem 1.5rem;
-  width: 280px;
-  min-height: 100%;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+  width: 250px;
+  position: fixed;
+  top: 150px; /* 根據 header 高度調整 */
+  overflow-y: auto; /* 如果內容過多，允許滾動 */
+  z-index: 1000; /* 確保側邊欄在其他內容之上 */
 }
 
 .filter-sidebar h3 {
@@ -207,10 +207,13 @@ main {
   background: linear-gradient(to bottom, #ffffff, #f8fafc);
   border-left: 1px solid #e2e8f0;
   padding: 2rem 1.5rem;
-  width: 280px;
-  min-height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 150px; /* 根據 header 高度調整 */
+  right: 0;
+  overflow-y: auto; /* 如果內容過多，允許滾動 */
+  z-index: 1000; /* 確保側邊欄在其他內容之上 */
   box-shadow: -2px 0 10px rgba(0, 0, 0, 0.02);
-  transition: transform 0.3s ease;
 }
 
 .compare-sidebar.hidden {
@@ -383,7 +386,7 @@ main {
 
   <main>
     <aside class="filter-sidebar">
-      <h3>應用篩選</h3>
+      <h3 data-i18n="filterTitle">應用篩選</h3>
       <ul>
         <li>
           <button class="filter-btn" data-filter="Drone">
@@ -419,11 +422,11 @@ main {
     </section>
 
     <aside class="compare-sidebar hidden">
-      <h3>比較產品</h3>
+      <h3 data-i18n="compareTitle">比較產品</h3>
       <ul id="compare-list">
         <!-- 產品項目會動態插入這裡 -->
       </ul>
-      <button id="compare-btn" class="hidden">比較產品</button>
+      <button id="compare-btn" class="hidden" data-i18n="compareButton">比較產品</button>
     </aside>
   </main>
 
@@ -448,6 +451,7 @@ main {
         // 讓 body 顯示（若有做 loading 動畫可在這裡移除）
         document.body.classList.remove('invisible');
       });
+
 
       // 語言選擇事件
       document.getElementById('languageSelect').addEventListener('change', (e) => {
@@ -497,7 +501,9 @@ main {
       }
 
       // 渲染產品卡
-      function renderProducts(productsArray) {
+// 渲染產品卡
+// 渲染產品卡
+function renderProducts(productsArray) {
   const grid = document.querySelector('.products-grid');
   
   // 清空網格前先做淡出動畫
@@ -510,6 +516,9 @@ main {
   // 短暫延遲後再重新渲染
   setTimeout(() => {
     grid.innerHTML = '';
+    
+    // 獲取當前語言
+    const currentLanguage = document.getElementById('languageSelect').value;
     
     productsArray.forEach((product, index) => {
       const card = document.createElement('div');
@@ -524,7 +533,7 @@ main {
              class="product-image">
         <div class="product-info">
           <h3 class="product-name">${product['Product Name']}</h3>
-          <button class="add-btn" data-name="${product['Product Name']}">Add</button>
+          <button class="add-btn" data-name="${product['Product Name']}"></button>
         </div>
         <div class="product-details">
           <p>${product.Applications}</p>
@@ -534,20 +543,23 @@ main {
         </div>
       `;
 
-      // 添加點擊事件
+      // 根據當前語言設置按鈕文字
+      const addButton = card.querySelector('.add-btn');
+      addButton.textContent = translations[currentLanguage].addButton;
+
+      // 添加點擊事件到產品圖片和產品型號
       const imageEl = card.querySelector('.product-image');
       const nameEl = card.querySelector('.product-name');
       
       [imageEl, nameEl].forEach(el => {
         el.addEventListener('click', () => {
-          window.location.href = `products-detail.html?product=${encodeURIComponent(product['Product Name'])}`;
+          window.location.href = `comparison.html?products=${encodeURIComponent(product['Product Name'])}`;
         });
         el.style.cursor = 'pointer';
       });
 
       // 添加比較按鈕事件
-      const addBtn = card.querySelector('.add-btn');
-      addBtn.addEventListener('click', () => {
+      addButton.addEventListener('click', () => {
         addToCompare(product);
       });
 
@@ -555,8 +567,62 @@ main {
     });
   }, 100); // 給予 100ms 的延遲以確保動畫順暢
 }
-      
+
+
+
       // 加入比較
+// 加入比較
+function addToCompare(product) {
+  const compareSidebar = document.querySelector('.compare-sidebar');
+  const compareList = document.getElementById('compare-list');
+  const compareBtn = document.getElementById('compare-btn');
+  
+  // 檢查是否已經加入該產品
+  const existingProduct = compareList.querySelector(`[data-product="${product['Product Name']}"]`);
+  if (existingProduct) {
+    return; // 如果產品已存在，不重複添加
+  }
+
+  // 顯示側邊欄
+  compareSidebar.classList.remove('hidden');
+
+  // 創建新的比較項目
+  const item = document.createElement('li');
+  item.classList.add('compare-item');
+  item.setAttribute('data-product', product['Product Name']);
+  
+  item.innerHTML = `
+    <span>${product['Product Name']}</span>
+    <button class="remove-btn" aria-label="移除 ${product['Product Name']}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  `;
+
+  // 添加移除按鈕事件
+  const removeBtn = item.querySelector('.remove-btn');
+  removeBtn.addEventListener('click', () => {
+    item.remove();
+    
+    // 如果沒有產品了，隱藏側邊欄
+    if (compareList.children.length === 0) {
+      compareSidebar.classList.add('hidden');
+    }
+    
+    // 更新比較按鈕顯示狀態
+    updateCompareButtonVisibility();
+  });
+
+  compareList.appendChild(item);
+  
+  // 更新比較按鈕顯示狀態
+  updateCompareButtonVisibility();
+}
+
+// 更新比較按鈕顯示狀態
+// 加入比較
 function addToCompare(product) {
   const compareSidebar = document.querySelector('.compare-sidebar');
   const compareList = document.getElementById('compare-list');
@@ -616,23 +682,49 @@ function updateCompareButtonVisibility() {
     
     // 更新比較按鈕點擊事件
     compareBtn.onclick = () => {
+      // 獲取所有選擇的產品名稱
       const productsToCompare = Array.from(compareList.children)
         .map(li => li.getAttribute('data-product'));
       
-      // 儲存要比較的產品
-      localStorage.setItem('compareProducts', JSON.stringify(productsToCompare));
+      // 將產品名稱以逗號分隔，並進行 URL 編碼
+      const productsQuery = productsToCompare.map(product => encodeURIComponent(product)).join('%2C');
       
-      // 儲存當前語言
-      localStorage.setItem('compareLanguage', document.getElementById('languageSelect').value);
-      
-      // 前往比較頁面
-      window.location.href = 'compare.html';
+      // 導向到 comparison.html 頁面
+      window.location.href = `comparison.html?products=${productsQuery}`;
     };
   } else {
     compareBtn.classList.add('hidden');
   }
-}
-      // 套用篩選
+}   
+
+// 更新比較按鈕顯示狀態
+// 更新比較按鈕顯示狀態
+// 更新比較按鈕顯示狀態
+function updateCompareButtonVisibility() {
+  const compareList = document.getElementById('compare-list');
+  const compareBtn = document.getElementById('compare-btn');
+  
+  if (compareList.children.length >= 2) {
+    compareBtn.classList.remove('hidden');
+    
+    // 更新比較按鈕點擊事件
+    compareBtn.onclick = () => {
+      // 獲取所有選擇的產品名稱
+      const productsToCompare = Array.from(compareList.children)
+        .map(li => li.getAttribute('data-product'));
+      
+      // 將產品名稱以逗號分隔，並進行 URL 編碼
+      const productsQuery = productsToCompare.map(product => encodeURIComponent(product)).join('%2C');
+      
+      // 導向到 comparison.html 頁面
+      window.location.href = `comparison.html?products=${productsQuery}`;
+    };
+  } else {
+    compareBtn.classList.add('hidden');
+  }
+} 
+
+// 套用篩選
       function applyFilter(filterKey) {
   if (!window.allProducts) return;
 
@@ -680,6 +772,24 @@ function updateCompareButtonVisibility() {
   renderProducts(filtered);
 }
     });
+
+
+
+// 更新篩選側邊欄的內容
+function updateFilterSidebar(language) {
+  const filterTitle = document.querySelector('.filter-sidebar h3');
+  const filterButtons = document.querySelectorAll('.filter-sidebar .filter-btn');
+
+  // 更新標題
+  filterTitle.textContent = translations[language].filterTitle;
+
+  // 更新按鈕文字
+  filterButtons[0].textContent = translations[language].filterDrone;
+  filterButtons[1].textContent = translations[language].filterAutomotive;
+  filterButtons[2].textContent = translations[language].filterSmartTraffic;
+  filterButtons[3].textContent = translations[language].filterRobot;
+  filterButtons[4].textContent = translations[language].filterIndoorPerson;
+}
   </script>
 
   <script src="translations.js"></script>
