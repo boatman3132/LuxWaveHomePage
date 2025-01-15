@@ -27,6 +27,7 @@
       width: 100%;
       max-width: 1200px;
       overflow-x: auto; /* 如果表格過寬，允許水平滾動 */
+      overflow-x: auto;
     }
 
     /* 比較表格 */
@@ -50,6 +51,7 @@
       font-weight: 600;
       color: #1e293b;
       white-space: nowrap; /* 防止表頭文字換行 */
+      white-space: nowrap;
     }
 
     .comparison-table td {
@@ -102,8 +104,7 @@
     <nav class="main-nav">
       <ul>
         <li><a href="index.html" class="gradient-btn" data-i18n="home">首頁</a></li>
-        <li><a href="products.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
-        <li><a href="products-detail.html" class="gradient-btn" data-i18n="products-detail">產品詳情介紹</a></li>
+        <li><a href="products.html" class="gradient-btn active" data-i18n="products">產品介紹</a></li>
         <li><a href="about.html" class="gradient-btn" data-i18n="about">關於我們</a></li>
       </ul>
     </nav>
@@ -188,57 +189,50 @@
         }
       }
 
-      // 渲染比較表格
-      function renderComparisonTable(products) {
-        const table = document.getElementById('comparison-table');
-        const tbody = document.getElementById('comparison-body');
-        tbody.innerHTML = '';
+// 渲染比較表格
+function renderComparisonTable(products) {
+  const table = document.getElementById('comparison-table');
+  const tbody = document.getElementById('comparison-body');
+  tbody.innerHTML = '';
 
-        // 定義要顯示的屬性順序
-        const attributes = [
-          'Product Name',
-          'Dimensions',
-          'Weight',
-          'Measurement Range',
-          'Applications',
-          'Voltage',
-          'Communication Interface',
-          'Frequency Range',
-          'Distance Accuracy',
-          'FOV Range',
-          'Max Targets',
-          'Output Data',
-          'Waterproof Rating'
-        ];
+  // 添加表頭（產品名稱）
+  const headerRow = table.querySelector('thead tr');
+  headerRow.innerHTML = '<th> </th>'; // 重置表頭
+  products.forEach(product => {
+    headerRow.innerHTML += `<th>${product['Product Name']}</th>`;
+  });
 
-        // 添加表頭（產品名稱）
-        const headerRow = table.querySelector('thead tr');
-        headerRow.innerHTML = '<th> </th>'; // 重置表頭
-        products.forEach(product => {
-          headerRow.innerHTML += `<th>${product['Product Name']}</th>`;
-        });
+  // 獲取所有屬性的集合
+  const allAttributes = new Set();
+  products.forEach(product => {
+    Object.keys(product).forEach(attr => {
+      allAttributes.add(attr);
+    });
+  });
 
-        // 添加表格內容
-        attributes.forEach(attr => {
-          const row = document.createElement('tr');
-          row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
+  // 添加表格內容
+  allAttributes.forEach(attr => {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
 
-          products.forEach(product => {
-            let value = product[attr];
-            if (attr === 'Product Name') {
-              // 如果是產品名稱，顯示圖片
-              value = `
-                <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
-                     alt="${product['Product Name']}" 
-                     class="product-image">
-              `;
-            }
-            row.innerHTML += `<td>${value}</td>`;
-          });
-
-          tbody.appendChild(row);
-        });
+    products.forEach(product => {
+      let value = product[attr] || "N/A"; // 如果屬性不存在，顯示 "N/A"
+      if (attr === 'Product Name') {
+        // 如果是產品名稱，顯示圖片
+        value = `
+          <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
+               alt="${product['Product Name']}" 
+               class="product-image">
+        `;
       }
+      row.innerHTML += `<td>${value}</td>`;
+    });
+
+    tbody.appendChild(row);
+  });
+}
+
+
     });
   </script>
 
