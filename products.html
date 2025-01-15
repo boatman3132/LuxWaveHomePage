@@ -6,6 +6,98 @@
   <title>LuxWave 毫米波雷達 | 產品介紹</title>
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* 左側篩選側邊欄 */
+    .filter-sidebar {
+      background-color: #f9f9f9;
+      border-right: 1px solid #ddd;
+      padding: 1rem;
+      width: 15%;
+    }
+  
+    /* 主要內容區塊布局 */
+    main {
+      display: flex;
+      min-height: 80vh;
+      flex-direction: row;
+    }
+  
+    /* 單列產品列表區 */
+    .products-grid {
+      flex: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  /* 單列產品卡片 */
+.product-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 圖片部分 */
+.product-image {
+  width: 8rem;
+  height: 8rem;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* 產品名稱與按鈕部分 */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 10rem;
+}
+
+.product-info h3 {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.add-btn {
+  background-color: #3b82f6;
+  color: #fff;
+  padding: 0.5rem 2rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #2563eb;
+}
+
+/* 產品詳細文字部分 */
+.product-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product-details p {
+  margin: 0;
+  color: #4b5563;
+}
+  </style>
+    
   </html>
 
   <body class="invisible">
@@ -36,7 +128,34 @@
   </header>
 
 
+  <main>
+    <!-- 篩選側邊欄 -->
+    <aside class="filter-sidebar">
+      <h3>應用篩選</h3>
+      <ul>
+        <!-- 根據需求對應 CSV 的 Applications 欄位 -->
+        <li><button class="filter-btn" data-filter="Drone">Drone</button></li>
+        <li><button class="filter-btn" data-filter="Automotive">Automotive</button></li>
+        <li><button class="filter-btn" data-filter="Smart Traffic">Smart Traffic</button></li>
+        <li><button class="filter-btn" data-filter="Robot">Robot</button></li>
+        <li><button class="filter-btn" data-filter="Indoor Person">Indoor Person</button></li>
+      </ul>
+    </aside>
 
+    <!-- 產品列表區 -->
+    <section class="products-grid single-column">
+      <!-- 產品卡片將會透過 JavaScript 動態插入 -->
+    </section>
+
+    <!-- 比較側邊欄 -->
+    <aside class="compare-sidebar hidden">
+      <h3>比較產品</h3>
+      <ul id="compare-list">
+        <!-- 選擇加入比較的產品會顯示在這裡 -->
+      </ul>
+      <button id="compare-btn" class="hidden">比較產品</button>
+    </aside>
+  </main>
 
 
 
@@ -46,6 +165,182 @@
   <footer class="site-footer">
     <p>© 2025 LuxWave. All rights reserved.</p>
   </footer>
+
+
+  <!-- 主程式碼 -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 預設載入語系（如果沒有指定就用選擇器的值）
+      let currentLanguage = document.getElementById('languageSelect').value;
+
+      // 載入產品資料
+      loadProducts(currentLanguage).then(() => {
+        // 讓 body 顯示（若有做 loading 動畫可在這裡移除）
+        document.body.classList.remove('invisible');
+      });
+
+      // 語言選擇事件
+      document.getElementById('languageSelect').addEventListener('change', (e) => {
+        currentLanguage = e.target.value;
+        loadProducts(currentLanguage);
+      });
+
+      // 篩選按鈕事件
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          applyFilter(btn.getAttribute('data-filter'));
+        });
+      });
+
+      // 讀取 CSV 並建立產品卡
+      async function loadProducts(language) {
+        try {
+          // 根據語言載入對應檔案，若語言值是 zh-tw，對應檔案 Radar_Product_Details-zh-tw.csv
+          // const response = await fetch(`Radar_Product_Details-${language}.csv`);
+          const response = await fetch(`Radar_Product_Details-en-us.csv`);
+
+          if (!response.ok) {
+            console.error(`無法載入：Radar_Product_Details-${language}.csv`);
+            return;
+          }
+
+          const data = await response.text();
+          const rows = data.split("\n").filter(row => row.trim() !== "");
+          const headers = rows[0].split(",").map(header => header.trim());
+
+          // 建立 products 陣列
+          const products = rows.slice(1).map(row => {
+            const values = row.split(",").map(v => v.trim());
+            const product = {};
+            headers.forEach((header, index) => {
+              product[header] = values[index] || "N/A";
+            });
+            return product;
+          });
+
+          // 將 products 暫存到全域（或局部）變數，以便篩選使用
+          window.allProducts = products;
+          renderProducts(products);
+        } catch (error) {
+          console.error("載入產品資料時發生錯誤：", error);
+        }
+      }
+
+      // 渲染產品卡
+      function renderProducts(productsArray) {
+        const grid = document.querySelector('.products-grid');
+        grid.innerHTML = '';
+
+        productsArray.forEach(product => {
+          const card = document.createElement('div');
+          card.classList.add('product-card');
+          
+          card.innerHTML = `
+            <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
+                alt="${product['Product Name']}" 
+                class="product-image">
+            <div class="product-info">
+              <h3 class="product-name">${product['Product Name']}</h3>
+              <button class="add-btn" data-name="${product['Product Name']}">Add</button>
+            </div>
+            <div class="product-details">
+              <p>${product.Applications}</p>
+              <p>Measurement Range: ${product['Measurement Range']}</p>
+              <p>Dimensions: ${product.Dimensions}</p>
+              <p>Frequency Range: ${product['Frequency Range']}</p>
+            </div>
+          `;
+
+          // Add click event for product image and name to navigate to detail page
+          const imageEl = card.querySelector('.product-image');
+          const nameEl = card.querySelector('.product-name');
+          
+          [imageEl, nameEl].forEach(el => {
+            el.addEventListener('click', () => {
+              window.location.href = `products-detail.html?product=${encodeURIComponent(product['Product Name'])}`;
+            });
+            
+            // Add cursor pointer style
+            el.style.cursor = 'pointer';
+          });
+
+          // Add click event for the Add button
+          const addBtn = card.querySelector('.add-btn');
+          addBtn.addEventListener('click', () => {
+            addToCompare(product);
+          });
+
+          grid.appendChild(card);
+        });
+      }
+      // 加入比較
+      function addToCompare(product) {
+        const compareSidebar = document.querySelector('.compare-sidebar');
+        compareSidebar.classList.remove('hidden');
+
+        const compareList = document.getElementById('compare-list');
+        const compareBtn = document.getElementById('compare-btn');
+
+        // 如果重複加入，可以再判斷是否已存在
+        const item = document.createElement('li');
+        item.textContent = product['Product Name'];
+        compareList.appendChild(item);
+
+        // 檢查比較按鈕顯示
+        if (compareList.children.length >= 2) {
+          compareBtn.classList.remove('hidden');
+        }
+
+        // 比較按鈕點擊 -> 進入比較頁面
+        compareBtn.onclick = () => {
+          // 取得所有要比較的產品名稱
+          const productsToCompare = Array.from(compareList.children).map(li => li.textContent);
+          // 存到 localStorage
+          localStorage.setItem('compareProducts', JSON.stringify(productsToCompare));
+          // 也儲存當前語言
+          localStorage.setItem('compareLanguage', document.getElementById('languageSelect').value);
+
+          // 進入比較頁面
+          window.location.href = 'compare.html';
+        };
+      }
+
+      // 套用篩選
+      function applyFilter(filterKey) {
+        if (!window.allProducts) return;
+
+        let filtered = [];
+        switch (filterKey) {
+          case 'Drone':
+            // Drone Obstacle Avoidance and Terrain Following
+            filtered = window.allProducts.filter(p => p.Applications.includes('Drone Obstacle Avoidance and Terrain Following'));
+            break;
+          case 'Automotive':
+            // Automotive Front Obstacle Avoidance Radar / Automotive Corner Radar
+            filtered = window.allProducts.filter(p =>
+              p.Applications.includes('Automotive Front Obstacle Avoidance Radar') ||
+              p.Applications.includes('Automotive Corner Radar')
+            );
+            break;
+          case 'Smart Traffic':
+            // Smart Traffic Radar
+            filtered = window.allProducts.filter(p => p.Applications.includes('Smart Traffic Radar'));
+            break;
+          case 'Robot':
+            // Robot Obstacle Avoidance Radar
+            filtered = window.allProducts.filter(p => p.Applications.includes('Robot Obstacle Avoidance Radar'));
+            break;
+          case 'Indoor Person':
+            // Indoor Personnel Detection Radar
+            filtered = window.allProducts.filter(p => p.Applications.includes('Indoor Personnel Detection Radar'));
+            break;
+          default:
+            filtered = window.allProducts;
+        }
+        renderProducts(filtered);
+      }
+    });
+  </script>
 
   <script src="translations.js"></script>
   <script src="script.js"></script>

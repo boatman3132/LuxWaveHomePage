@@ -125,9 +125,6 @@ td:nth-child(5) {
   </style>
 
 
-
-
-
 </head>
 <body class="invisible">
     <header class="site-header">
@@ -156,43 +153,24 @@ td:nth-child(5) {
         </div>
       </header>
 
-  <main>
-    <section>
-    <div class="table-wrapper" style="margin: 0;">
-        <table id="productTable">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Dimensions</th>
-                    <th>Weight</th>
-                    <th>Measurement Range</th>
-                    <th>Applications</th>
-                    <th>Voltage</th>
-                    <th>Communication Interface</th>
-                    <th>Frequency Range</th>
-                    <th>Distance Accuracy</th>
-                    <th>FOV Range</th>
-                    <th>Max Targets</th>
-                    <th>Output Data</th>
-                    <th>Waterproof Rating</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Content will be dynamically loaded -->
-            </tbody>
-        </table>
-    </div>
+    <main>
+        <section>
+            <div class="table-wrapper" style="margin: 0;">
+                <table id="productTable">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    <!-- Content will be dynamically loaded -->
+                    </tbody>
+                </table>
+            </div>
 
-    <div class="floating-bubble" id="actionBubble">
-        <button id="compareBtn">Compare</button>
-        <button id="clearBtn">Clear Selection</button>
-    </div>
-
-
-
-    </section>
-
-  </main>
+            <div class="floating-bubble" id="actionBubble">
+                <button id="compareBtn">Compare</button>
+                <button id="clearBtn">Clear Selection</button>
+            </div>
+        </section>
+    </main>
 
   <footer class="site-footer">
     <p>© 2025 LuxWave. All rights reserved.</p>
@@ -310,7 +288,6 @@ function populateTable(csvData) {
 }
 
 
-// Handle checkbox change
 // Handle checkbox change
 const selectedProducts = new Set();
 
