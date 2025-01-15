@@ -7,13 +7,135 @@
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css"/>
   <style>
-    /* 左側篩選側邊欄 */
-    .filter-sidebar {
-      background-color: #f9f9f9;
-      border-right: 1px solid #ddd;
-      padding: 1rem;
-      width: 15%;
-    }
+/* 左側篩選側邊欄 */
+.filter-sidebar {
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+  border-right: 1px solid #e2e8f0;
+  padding: 2rem 1.5rem;
+  width: 280px;
+  min-height: 100%;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.02);
+}
+
+.filter-sidebar h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.filter-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filter-btn {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  background-color: white;
+  color: #475569;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* 篩選按鈕的圖標 */
+.filter-btn::before {
+  content: '';
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+/* 各類別的圖標 */
+.filter-btn[data-filter="Drone"]::before {
+  background-image: url('images/icons/drone.svg');
+}
+
+.filter-btn[data-filter="Automotive"]::before {
+  background-image: url('images/icons/car.svg');
+}
+
+.filter-btn[data-filter="Smart Traffic"]::before {
+  background-image: url('images/icons/traffic.svg');
+}
+
+.filter-btn[data-filter="Robot"]::before {
+  background-image: url('images/icons/robot.svg');
+}
+
+.filter-btn[data-filter="Indoor Person"]::before {
+  background-image: url('images/icons/person.svg');
+}
+
+/* 懸停效果 */
+.filter-btn:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  transform: translateX(4px);
+}
+
+.filter-btn:hover::before {
+  opacity: 1;
+}
+
+/* 選中狀態 */
+.filter-btn.active {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 適配深色模式 */
+@media (prefers-color-scheme: dark) {
+  .filter-sidebar {
+    background: linear-gradient(to bottom, #1e293b, #0f172a);
+    border-right-color: #334155;
+  }
+
+  .filter-sidebar h3 {
+    color: #f1f5f9;
+    border-bottom-color: #334155;
+  }
+
+  .filter-btn {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+
+  .filter-btn:hover {
+    background-color: #334155;
+    border-color: #475569;
+    color: #f8fafc;
+  }
+
+  .filter-btn.active {
+    background-color: #2d3748;
+    border-color: #64748b;
+    color: #f8fafc;
+  }
+}
   
     /* 主要內容區塊布局 */
     main {
@@ -96,6 +218,122 @@
   margin: 0;
   color: #4b5563;
 }
+
+
+
+/* 比較側邊欄樣式 */
+.compare-sidebar {
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+  border-left: 1px solid #e2e8f0;
+  padding: 2rem 1.5rem;
+  width: 280px;
+  min-height: 100%;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease;
+}
+
+.compare-sidebar.hidden {
+  transform: translateX(100%);
+}
+
+.compare-sidebar h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+#compare-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.compare-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.remove-btn:hover {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+#compare-btn {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+}
+
+#compare-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+}
+
+#compare-btn:active {
+  transform: translateY(0);
+}
+
+#compare-btn.hidden {
+  display: none;
+}
+
+/* 適配深色模式 */
+@media (prefers-color-scheme: dark) {
+  .compare-sidebar {
+    background: linear-gradient(to bottom, #1e293b, #0f172a);
+    border-left-color: #334155;
+  }
+
+  .compare-sidebar h3 {
+    color: #f1f5f9;
+    border-bottom-color: #334155;
+  }
+
+  .compare-item {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #e2e8f0;
+  }
+
+  .remove-btn:hover {
+    background-color: #991b1b;
+    color: #fecaca;
+  }
+
+  #compare-btn {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  }
+}
   </style>
     
   </html>
@@ -129,16 +367,34 @@
 
 
   <main>
-    <!-- 篩選側邊欄 -->
     <aside class="filter-sidebar">
       <h3>應用篩選</h3>
       <ul>
-        <!-- 根據需求對應 CSV 的 Applications 欄位 -->
-        <li><button class="filter-btn" data-filter="Drone">Drone</button></li>
-        <li><button class="filter-btn" data-filter="Automotive">Automotive</button></li>
-        <li><button class="filter-btn" data-filter="Smart Traffic">Smart Traffic</button></li>
-        <li><button class="filter-btn" data-filter="Robot">Robot</button></li>
-        <li><button class="filter-btn" data-filter="Indoor Person">Indoor Person</button></li>
+        <li>
+          <button class="filter-btn" data-filter="Drone">
+            Drone
+          </button>
+        </li>
+        <li>
+          <button class="filter-btn" data-filter="Automotive">
+            Automotive
+          </button>
+        </li>
+        <li>
+          <button class="filter-btn" data-filter="Smart Traffic">
+            Smart Traffic
+          </button>
+        </li>
+        <li>
+          <button class="filter-btn" data-filter="Robot">
+            Robot
+          </button>
+        </li>
+        <li>
+          <button class="filter-btn" data-filter="Indoor Person">
+            Indoor Person
+          </button>
+        </li>
       </ul>
     </aside>
 
@@ -147,11 +403,10 @@
       <!-- 產品卡片將會透過 JavaScript 動態插入 -->
     </section>
 
-    <!-- 比較側邊欄 -->
     <aside class="compare-sidebar hidden">
       <h3>比較產品</h3>
       <ul id="compare-list">
-        <!-- 選擇加入比較的產品會顯示在這裡 -->
+        <!-- 產品項目會動態插入這裡 -->
       </ul>
       <button id="compare-btn" class="hidden">比較產品</button>
     </aside>
@@ -274,37 +529,82 @@
         });
       }
       // 加入比較
-      function addToCompare(product) {
-        const compareSidebar = document.querySelector('.compare-sidebar');
-        compareSidebar.classList.remove('hidden');
+      // 加入比較
+function addToCompare(product) {
+  const compareSidebar = document.querySelector('.compare-sidebar');
+  const compareList = document.getElementById('compare-list');
+  const compareBtn = document.getElementById('compare-btn');
+  
+  // 檢查是否已經加入該產品
+  const existingProduct = compareList.querySelector(`[data-product="${product['Product Name']}"]`);
+  if (existingProduct) {
+    return; // 如果產品已存在，不重複添加
+  }
 
-        const compareList = document.getElementById('compare-list');
-        const compareBtn = document.getElementById('compare-btn');
+  // 顯示側邊欄
+  compareSidebar.classList.remove('hidden');
 
-        // 如果重複加入，可以再判斷是否已存在
-        const item = document.createElement('li');
-        item.textContent = product['Product Name'];
-        compareList.appendChild(item);
+  // 創建新的比較項目
+  const item = document.createElement('li');
+  item.classList.add('compare-item');
+  item.setAttribute('data-product', product['Product Name']);
+  
+  item.innerHTML = `
+    <span>${product['Product Name']}</span>
+    <button class="remove-btn" aria-label="移除 ${product['Product Name']}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  `;
 
-        // 檢查比較按鈕顯示
-        if (compareList.children.length >= 2) {
-          compareBtn.classList.remove('hidden');
-        }
+  // 添加移除按鈕事件
+  const removeBtn = item.querySelector('.remove-btn');
+  removeBtn.addEventListener('click', () => {
+    item.remove();
+    
+    // 如果沒有產品了，隱藏側邊欄
+    if (compareList.children.length === 0) {
+      compareSidebar.classList.add('hidden');
+    }
+    
+    // 更新比較按鈕顯示狀態
+    updateCompareButtonVisibility();
+  });
 
-        // 比較按鈕點擊 -> 進入比較頁面
-        compareBtn.onclick = () => {
-          // 取得所有要比較的產品名稱
-          const productsToCompare = Array.from(compareList.children).map(li => li.textContent);
-          // 存到 localStorage
-          localStorage.setItem('compareProducts', JSON.stringify(productsToCompare));
-          // 也儲存當前語言
-          localStorage.setItem('compareLanguage', document.getElementById('languageSelect').value);
+  compareList.appendChild(item);
+  
+  // 更新比較按鈕顯示狀態
+  updateCompareButtonVisibility();
+}
 
-          // 進入比較頁面
-          window.location.href = 'compare.html';
-        };
-      }
-
+// 更新比較按鈕顯示狀態
+function updateCompareButtonVisibility() {
+  const compareList = document.getElementById('compare-list');
+  const compareBtn = document.getElementById('compare-btn');
+  
+  if (compareList.children.length >= 2) {
+    compareBtn.classList.remove('hidden');
+    
+    // 更新比較按鈕點擊事件
+    compareBtn.onclick = () => {
+      const productsToCompare = Array.from(compareList.children)
+        .map(li => li.getAttribute('data-product'));
+      
+      // 儲存要比較的產品
+      localStorage.setItem('compareProducts', JSON.stringify(productsToCompare));
+      
+      // 儲存當前語言
+      localStorage.setItem('compareLanguage', document.getElementById('languageSelect').value);
+      
+      // 前往比較頁面
+      window.location.href = 'compare.html';
+    };
+  } else {
+    compareBtn.classList.add('hidden');
+  }
+}
       // 套用篩選
       function applyFilter(filterKey) {
         if (!window.allProducts) return;
