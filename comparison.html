@@ -111,16 +111,21 @@
     }
 
     /* 為每一行設置不同的動畫延遲 */
-    .comparison-table tr:nth-child(1) { animation-delay: 0.2s; }
-    .comparison-table tr:nth-child(2) { animation-delay: 0.4s; }
-    .comparison-table tr:nth-child(3) { animation-delay: 0.6s; }
-    .comparison-table tr:nth-child(4) { animation-delay: 0.8s; }
-    .comparison-table tr:nth-child(5) { animation-delay: 1s; }
-    .comparison-table tr:nth-child(6) { animation-delay: 1.2s; }
-    .comparison-table tr:nth-child(7) { animation-delay: 1.4s; }
-    .comparison-table tr:nth-child(8) { animation-delay: 1.6s; }
-    .comparison-table tr:nth-child(9) { animation-delay: 1.8s; }
-    .comparison-table tr:nth-child(10) { animation-delay: 2s; }
+    .comparison-table tr:nth-child(1) { animation-delay: 0.07s; }
+    .comparison-table tr:nth-child(2) { animation-delay: 0.14s; }
+    .comparison-table tr:nth-child(3) { animation-delay: 0.21s; }
+    .comparison-table tr:nth-child(4) { animation-delay: 0.28s; }
+    .comparison-table tr:nth-child(5) { animation-delay: 0.35s; }
+    .comparison-table tr:nth-child(6) { animation-delay: 0.42s; }
+    .comparison-table tr:nth-child(7) { animation-delay: 0.49s; }
+    .comparison-table tr:nth-child(8) { animation-delay: 0.56s; }
+    .comparison-table tr:nth-child(9) { animation-delay: 0.63s; }
+    .comparison-table tr:nth-child(10) { animation-delay: 0.7s; }
+    .comparison-table tr:nth-child(11) { animation-delay: 0.77s; }
+    .comparison-table tr:nth-child(12) { animation-delay: 0.84s; }
+    .comparison-table tr:nth-child(13) { animation-delay: 0.91s; }
+    .comparison-table tr:nth-child(14) { animation-delay: 0.98s; }
+    .comparison-table tr:nth-child(15) { animation-delay: 1.05s; }
   </style>
 </head>
 <body class="invisible">
@@ -170,100 +175,139 @@
   </footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 從 URL 獲取要比較的產品名稱
-      const urlParams = new URLSearchParams(window.location.search);
-      const productsToCompare = urlParams.get('products').split(',');
 
-      // 載入產品數據
-      loadProducts().then(products => {
-        // 過濾出要比較的產品
-        const filteredProducts = products.filter(product => 
-          productsToCompare.includes(product['Product Name'])
-        );
+document.addEventListener("DOMContentLoaded", () => {
+  // 從 URL 獲取要比較的產品名稱
+  const urlParams = new URLSearchParams(window.location.search);
+  const productsToCompare = urlParams.get('products').split(',');
 
-        // 渲染比較表格
-        renderComparisonTable(filteredProducts);
-        
-        // 讓 body 顯示
-        document.body.classList.remove('invisible');
+  // 獲取語言選擇的下拉菜單
+  const languageSelect = document.getElementById('languageSelect');
+
+  // 從 URL 參數或本地存儲中獲取當前語言
+  const urlLang = urlParams.get('lang'); // 從 URL 參數獲取語言
+  const storedLang = localStorage.getItem('selectedLanguage'); // 從本地存儲獲取語言
+  const currentLanguage = urlLang || storedLang || 'zh-TW'; // 默認為繁體中文
+
+  // 設置 languageSelect 的值
+  languageSelect.value = currentLanguage;
+
+  // 初始加載：根據當前語言加載 CSV 文件
+  loadAndRenderComparisonTable(currentLanguage, productsToCompare);
+
+  // 監聽語言切換事件
+  languageSelect.addEventListener('change', (event) => {
+    const selectedLanguage = event.target.value;
+    // 保存語言設置到本地存儲
+    localStorage.setItem('selectedLanguage', selectedLanguage);
+    // 重新加載並渲染表格
+    loadAndRenderComparisonTable(selectedLanguage, productsToCompare);
+  });
+
+  // 讓 body 顯示
+  document.body.classList.remove('invisible');
+});
+
+// 加載 CSV 文件並渲染比較表格
+async function loadAndRenderComparisonTable(selectedLanguage, productsToCompare) {
+  // 根據語言選擇 CSV 文件
+  const csvFileName = selectedLanguage === 'zh-TW' ? 'Radar_Product_Details-zh-tw.csv' :
+                      selectedLanguage === 'zh-CN' ? 'Radar_Product_Details-zh-cn.csv' :
+                      selectedLanguage === 'en-US' ? 'Radar_Product_Details-en-us.csv' :
+                      selectedLanguage === 'ja-JP' ? 'Radar_Product_Details-ja-jp.csv' :
+                      'Radar_Product_Details-zh-tw.csv'; // 默認為繁體中文
+
+  // 載入產品數據
+  const { products, productNameHeader } = await loadProducts(csvFileName);
+
+  // 過濾出要比較的產品
+  const filteredProducts = products.filter(product =>
+    productsToCompare.includes(product[productNameHeader])
+  );
+
+  // 渲染比較表格
+  renderComparisonTable(filteredProducts, productNameHeader);
+}
+
+// 載入產品數據
+async function loadProducts(csvFileName) {
+  try {
+    const response = await fetch(csvFileName);
+    if (!response.ok) {
+      console.error('無法載入產品數據');
+      return;
+    }
+
+    const csvData = await response.text();
+    const rows = csvData.split("\n").filter(row => row.trim() !== "");
+    const headers = rows[0].split(",").map(header => header.trim());
+
+    // 動態獲取第一列的表頭名稱
+    const productNameHeader = headers[0]; // 第一列的表頭名稱
+
+    // 建立 products 陣列
+    const products = rows.slice(1).map(row => {
+      const values = row.split(",").map(v => v.trim());
+      const product = {};
+      headers.forEach((header, index) => {
+        product[header] = values[index] || "N/A";
       });
-
-      // 載入產品數據
-      async function loadProducts() {
-        try {
-          const response = await fetch('Radar_Product_Details-en-us.csv');
-          if (!response.ok) {
-            console.error('無法載入產品數據');
-            return;
-          }
-
-          const data = await response.text();
-          const rows = data.split("\n").filter(row => row.trim() !== "");
-          const headers = rows[0].split(",").map(header => header.trim());
-
-          // 建立 products 陣列
-          const products = rows.slice(1).map(row => {
-            const values = row.split(",").map(v => v.trim());
-            const product = {};
-            headers.forEach((header, index) => {
-              product[header] = values[index] || "N/A";
-            });
-            return product;
-          });
-
-          return products;
-        } catch (error) {
-          console.error("載入產品資料時發生錯誤：", error);
-        }
-      }
-
-      // 渲染比較表格
-      function renderComparisonTable(products) {
-        const table = document.getElementById('comparison-table');
-        const tbody = document.getElementById('comparison-body');
-        tbody.innerHTML = '';
-
-        // 添加表頭（產品名稱）
-        const headerRow = table.querySelector('thead tr');
-        headerRow.innerHTML = '<th> </th>'; // 重置表頭
-        products.forEach(product => {
-          headerRow.innerHTML += `<th>${product['Product Name']}</th>`;
-        });
-
-        // 獲取所有屬性的集合
-        const allAttributes = new Set();
-        products.forEach(product => {
-          Object.keys(product).forEach(attr => {
-            allAttributes.add(attr);
-          });
-        });
-
-        // 添加表格內容
-        allAttributes.forEach(attr => {
-          const row = document.createElement('tr');
-          row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
-
-          products.forEach(product => {
-            let value = product[attr] || "N/A"; // 如果屬性不存在，顯示 "N/A"
-            if (attr === 'Product Name') {
-              // 如果是產品名稱，顯示圖片
-              value = `
-                <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
-                     alt="${product['Product Name']}" 
-                     class="product-image">
-              `;
-            }
-            row.innerHTML += `<td>${value}</td>`;
-          });
-
-          tbody.appendChild(row);
-        });
-
-        // 顯示表格
-        table.style.opacity = 1;
-      }
+      return product;
     });
+
+    return { products, productNameHeader }; // 返回產品數據和產品名稱的表頭
+  } catch (error) {
+    console.error("載入產品資料時發生錯誤：", error);
+  }
+}
+
+// 渲染比較表格
+function renderComparisonTable(products, productNameHeader) {
+  const table = document.getElementById('comparison-table');
+  const tbody = document.getElementById('comparison-body');
+  tbody.innerHTML = '';
+
+  // 添加表頭（產品名稱）
+  const headerRow = table.querySelector('thead tr');
+  headerRow.innerHTML = '<th> </th>'; // 重置表頭
+  products.forEach(product => {
+    headerRow.innerHTML += `<th>${product[productNameHeader]}</th>`;
+  });
+
+  // 獲取所有屬性的集合
+  const allAttributes = new Set();
+  products.forEach(product => {
+    Object.keys(product).forEach(attr => {
+      allAttributes.add(attr);
+    });
+  });
+
+  // 添加表格內容
+  allAttributes.forEach(attr => {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
+
+    products.forEach(product => {
+      let value = product[attr] || "N/A"; // 如果屬性不存在，顯示 "N/A"
+      if (attr === productNameHeader) {
+        // 如果是產品名稱，顯示圖片
+        value = `
+          <img src="images/product-${product[productNameHeader].toLowerCase().replace(/\s+/g, '-')}.png" 
+               alt="${product[productNameHeader]}" 
+               class="product-image">
+        `;
+      }
+      row.innerHTML += `<td>${value}</td>`;
+    });
+
+    tbody.appendChild(row);
+  });
+
+  // 顯示表格
+  table.style.opacity = 1;
+}
+
+
   </script>
 
   <script src="translations.js"></script>
