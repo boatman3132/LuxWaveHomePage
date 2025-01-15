@@ -26,7 +26,6 @@
     .comparison-table-container {
       width: 100%;
       max-width: 1200px;
-      overflow-x: auto; /* 如果表格過寬，允許水平滾動 */
       overflow-x: auto;
     }
 
@@ -37,6 +36,8 @@
       background-color: #fff;
       border-radius: 1rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      opacity: 0; /* 初始狀態為透明 */
+      transition: opacity 0.5s ease;
     }
 
     .comparison-table th,
@@ -50,7 +51,6 @@
       background-color: #f1f5f9;
       font-weight: 600;
       color: #1e293b;
-      white-space: nowrap; /* 防止表頭文字換行 */
       white-space: nowrap;
     }
 
@@ -91,6 +91,36 @@
     .back-btn:active {
       transform: translateY(0);
     }
+
+    /* 漸入動畫 */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 應用漸入動畫到表格行 */
+    .comparison-table tr {
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* 為每一行設置不同的動畫延遲 */
+    .comparison-table tr:nth-child(1) { animation-delay: 0.2s; }
+    .comparison-table tr:nth-child(2) { animation-delay: 0.4s; }
+    .comparison-table tr:nth-child(3) { animation-delay: 0.6s; }
+    .comparison-table tr:nth-child(4) { animation-delay: 0.8s; }
+    .comparison-table tr:nth-child(5) { animation-delay: 1s; }
+    .comparison-table tr:nth-child(6) { animation-delay: 1.2s; }
+    .comparison-table tr:nth-child(7) { animation-delay: 1.4s; }
+    .comparison-table tr:nth-child(8) { animation-delay: 1.6s; }
+    .comparison-table tr:nth-child(9) { animation-delay: 1.8s; }
+    .comparison-table tr:nth-child(10) { animation-delay: 2s; }
   </style>
 </head>
 <body class="invisible">
@@ -120,7 +150,6 @@
   </header>
 
   <main>
-    <!-- <h1 data-i18n="compareTitle">產品比較</h1> -->
     <div class="comparison-table-container">
       <table class="comparison-table" id="comparison-table">
         <thead>
@@ -189,50 +218,51 @@
         }
       }
 
-// 渲染比較表格
-function renderComparisonTable(products) {
-  const table = document.getElementById('comparison-table');
-  const tbody = document.getElementById('comparison-body');
-  tbody.innerHTML = '';
+      // 渲染比較表格
+      function renderComparisonTable(products) {
+        const table = document.getElementById('comparison-table');
+        const tbody = document.getElementById('comparison-body');
+        tbody.innerHTML = '';
 
-  // 添加表頭（產品名稱）
-  const headerRow = table.querySelector('thead tr');
-  headerRow.innerHTML = '<th> </th>'; // 重置表頭
-  products.forEach(product => {
-    headerRow.innerHTML += `<th>${product['Product Name']}</th>`;
-  });
+        // 添加表頭（產品名稱）
+        const headerRow = table.querySelector('thead tr');
+        headerRow.innerHTML = '<th> </th>'; // 重置表頭
+        products.forEach(product => {
+          headerRow.innerHTML += `<th>${product['Product Name']}</th>`;
+        });
 
-  // 獲取所有屬性的集合
-  const allAttributes = new Set();
-  products.forEach(product => {
-    Object.keys(product).forEach(attr => {
-      allAttributes.add(attr);
-    });
-  });
+        // 獲取所有屬性的集合
+        const allAttributes = new Set();
+        products.forEach(product => {
+          Object.keys(product).forEach(attr => {
+            allAttributes.add(attr);
+          });
+        });
 
-  // 添加表格內容
-  allAttributes.forEach(attr => {
-    const row = document.createElement('tr');
-    row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
+        // 添加表格內容
+        allAttributes.forEach(attr => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${attr}</td>`; // 屬性名稱
 
-    products.forEach(product => {
-      let value = product[attr] || "N/A"; // 如果屬性不存在，顯示 "N/A"
-      if (attr === 'Product Name') {
-        // 如果是產品名稱，顯示圖片
-        value = `
-          <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
-               alt="${product['Product Name']}" 
-               class="product-image">
-        `;
+          products.forEach(product => {
+            let value = product[attr] || "N/A"; // 如果屬性不存在，顯示 "N/A"
+            if (attr === 'Product Name') {
+              // 如果是產品名稱，顯示圖片
+              value = `
+                <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
+                     alt="${product['Product Name']}" 
+                     class="product-image">
+              `;
+            }
+            row.innerHTML += `<td>${value}</td>`;
+          });
+
+          tbody.appendChild(row);
+        });
+
+        // 顯示表格
+        table.style.opacity = 1;
       }
-      row.innerHTML += `<td>${value}</td>`;
-    });
-
-    tbody.appendChild(row);
-  });
-}
-
-
     });
   </script>
 
