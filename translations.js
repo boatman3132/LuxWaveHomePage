@@ -24,7 +24,7 @@ const translations = {
       "valueHumanCentered": "以人為本：關注使用者體驗與實際場景",
       "valueSustainability": "永續經營：與合作夥伴共創未來",
       "companyHistoryTitle": "發展歷程",
-      "companyHistoryDesc": "2018年成立，專注於車用毫米波雷達…(此處可放年表或里程碑)",
+      "companyHistoryDesc": "2024年成立，專注於毫米波雷達",
       "contactInfoTitle": "聯繫方式",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "電話: +886 935548787",
@@ -33,9 +33,7 @@ const translations = {
       addButton: '加入比較',
       "filterTitle": "應用篩選",
       "compareButton": "比較產品",
-      measurementRange: '測量範圍',
-      dimensions: '尺寸',
-      frequencyRange: '頻率範圍',
+
 
 
 
@@ -65,7 +63,7 @@ const translations = {
       "valueHumanCentered": "以人为本：关注用户体验与实际场景",
       "valueSustainability": "永续经营：与合作伙伴共创未来",
       "companyHistoryTitle": "发展历程",
-      "companyHistoryDesc": "2018年成立，专注于车用毫米波雷达…(此处可放年表或里程碑)",
+      "companyHistoryDesc": "2024年成立，专注于毫米波雷达",
       "contactInfoTitle": "联系方式",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "电话: +886 935548787",
@@ -74,6 +72,11 @@ const translations = {
       addButton: '加入比较',
       "filterTitle": "应用筛选",
       "compareButton": "比较产品",
+      filterDrone: '无人机',
+      filterAutomotive: '汽车',
+      filterSmartTraffic: '智慧交通',
+      filterRobot: '机器人',
+      filterIndoorPerson: '室内人员检测',
     },
     "en-US": {
       "siteTitle": " ",
@@ -100,7 +103,7 @@ const translations = {
       "valueHumanCentered": "Human-centered: Focusing on user experience and practical scenarios",
       "valueSustainability": "Sustainability: Co-creating a better future with our partners",
       "companyHistoryTitle": "Our History",
-      "companyHistoryDesc": "Established in 2018, specializing in automotive millimeter-wave radar... (Insert timeline or milestones here)",
+      "companyHistoryDesc": "Established in 2024, specializing in millimeter-wave radar.",
       "contactInfoTitle": "Contact Information",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "Phone: +886 935548787",
@@ -109,6 +112,11 @@ const translations = {
       addButton: 'Add to Compare',
       "filterTitle": "Application Filter",
       "compareButton": "Compare Products",
+      filterDrone: 'Drone',
+      filterAutomotive: 'Automotive',
+      filterSmartTraffic: 'Smart Traffic',
+      filterRobot: 'Robot',
+      filterIndoorPerson: 'Indoor Person',
 
     },
     "ja-JP": {
@@ -136,7 +144,7 @@ const translations = {
       "valueHumanCentered": "人間中心：ユーザー体験と実際のシナリオに焦点を当てる",
       "valueSustainability": "持続可能性：パートナーと共により良い未来を創造する",
       "companyHistoryTitle": "沿革",
-      "companyHistoryDesc": "2018年設立、自動車用ミリ波レーダーに特化...(ここに年表やマイルストーンを挿入)",
+      "companyHistoryDesc": "2024年設立、ミリ波レーダーに特化",
       "contactInfoTitle": "連絡先",
       "contactEmail": "Email: samuel763@gmail.com",
       "contactPhone": "電話: +886 935548787",
@@ -145,6 +153,11 @@ const translations = {
       addButton: '比較に追加',
       "filterTitle": "アプリケーションフィルター",
       "compareButton": "製品比較",
+      filterDrone: 'ドローン',
+      filterAutomotive: '自動車',
+      filterSmartTraffic: 'スマート交通',
+      filterRobot: 'ロボット',
+      filterIndoorPerson: '室内人員検出',
 
     }
   };

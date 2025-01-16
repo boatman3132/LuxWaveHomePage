@@ -6,80 +6,119 @@
   <title>LuxWave 毫米波雷達 | 關於我們</title>
   <link rel="icon" href="images/favicon.png" type="image/png"/>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* 漸入動畫 */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 應用漸入動畫 */
+    .site-header,
+    .company-intro,
+    .company-values,
+    .company-history,
+    .contact-info,
+    .site-footer {
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    .site-header {
+      animation-delay: 0.2s;
+    }
+
+    .company-intro {
+      animation-delay: 0.4s;
+    }
+
+    .company-values {
+      animation-delay: 0.6s;
+    }
+
+    .company-history {
+      animation-delay: 0.8s;
+    }
+
+    .contact-info {
+      animation-delay: 1s;
+    }
+
+    .site-footer {
+      animation-delay: 1.2s;
+    }
+  </style>
 </head>
 <body class="invisible">
-    <header class="site-header">
-        <div class="logo-area">
-          <a href="index.html">
-            <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
-          </a>
-          <h1 class="site-title" data-i18n="siteTitle">LuxWave 璿機科技</h1>
-        </div>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="index.html" class="gradient-btn" data-i18n="home">首頁</a></li>
-            <li><a href="products.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
-            <li><a href="about.html" class="gradient-btn active" data-i18n="about">關於我們</a></li>
-          </ul>
-        </nav>
-        <div class="language-switch">
-          <label data-i18n="languageSwitch">Language</label>
-          <select id="languageSelect">
-            <option value="zh-TW">繁體中文</option>
-            <option value="zh-CN">简体中文</option>
-            <option value="en-US">English</option>
-            <option value="ja-JP">日本語</option>
-          </select>
-        </div>
-      </header>
+  <header class="site-header">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
+      </a>
+      <h1 class="site-title" data-i18n="siteTitle">LuxWave 璿機科技</h1>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html" class="gradient-btn" data-i18n="home">首頁</a></li>
+        <li><a href="products.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
+        <li><a href="about.html" class="gradient-btn active" data-i18n="about">關於我們</a></li>
+      </ul>
+    </nav>
+    <div class="language-switch">
+      <label data-i18n="languageSwitch">Language</label>
+      <select id="languageSelect">
+        <option value="zh-TW">繁體中文</option>
+        <option value="zh-CN">简体中文</option>
+        <option value="en-US">English</option>
+        <option value="ja-JP">日本語</option>
+      </select>
+    </div>
+  </header>
 
   <main class="about-page">
     <section class="company-intro">
-        <h2 data-i18n="companyIntroTitle">公司簡介</h2>
-        <p data-i18n="companyIntroDesc">
-          LuxWave 為全球領先的毫米波雷達解決方案提供商，致力於推動自動化與安全監測應用。
-          我們擁有一支經驗豐富的研發團隊，核心技術涵蓋硬體設計、訊號處理與 AI 演算法。
-        </p>
-      </section>
-      <section class="company-values">
-        <h2 data-i18n="companyValuesTitle">企業理念</h2>
-        <ul>
-          <li data-i18n="valueExcellence">追求卓越：持續創新與技術突破</li>
-          <li data-i18n="valueHumanCentered">以人為本：關注使用者體驗與實際場景</li>
-          <li data-i18n="valueSustainability">永續經營：與合作夥伴共創未來</li>
-        </ul>
-      </section>
-      <section class="company-history">
-        <h2 data-i18n="companyHistoryTitle">發展歷程</h2>
-        <p data-i18n="companyHistoryDesc">2018年成立，專注於車用毫米波雷達…(此處可放年表或里程碑)</p>
-      </section>
+      <h2 data-i18n="companyIntroTitle">公司簡介</h2>
+      <p data-i18n="companyIntroDesc">
+        LuxWave 為全球領先的毫米波雷達解決方案提供商，致力於推動自動化與安全監測應用。
+        我們擁有一支經驗豐富的研發團隊，核心技術涵蓋硬體設計、訊號處理與 AI 演算法。
+      </p>
+    </section>
+    <section class="company-values">
+      <h2 data-i18n="companyValuesTitle">企業理念</h2>
+      <ul>
+        <li data-i18n="valueExcellence">追求卓越：持續創新與技術突破</li>
+        <li data-i18n="valueHumanCentered">以人為本：關注使用者體驗與實際場景</li>
+        <li data-i18n="valueSustainability">永續經營：與合作夥伴共創未來</li>
+      </ul>
+    </section>
+    <section class="company-history">
+      <h2 data-i18n="companyHistoryTitle">發展歷程</h2>
+      <p data-i18n="companyHistoryDesc">2024年成立，專注於毫米波雷達</p>
+    </section>
 
-      
-      <section class="contact-info">
-        <h2 data-i18n="contactInfoTitle">聯繫方式</h2>
-        <p data-i18n="contactEmail">Email: samuel763@gmail.com</p>
-        <p data-i18n="contactPhone">電話: +886 935548787</p>
+    <section class="contact-info">
+      <h2 data-i18n="contactInfoTitle">聯繫方式</h2>
+      <p data-i18n="contactEmail">Email: samuel763@gmail.com</p>
+      <p data-i18n="contactPhone">電話: +886 935548787</p>
 
-        <br></br>
-        <h2 data-i18n="mapLocation">地圖位置</h2>
+      <br></br>
+      <h2 data-i18n="mapLocation">地圖位置</h2>
 
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14453.573507643074!2d121.52558089999998!3d25.0885419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442aeb9be771d11%3A0x5bb870c52d359c9c!2zMTEx5Y-w5YyX5biC5aOr5p6X5Y2A5Lit5q2j6LevNDk16Jmf!5e0!3m2!1szh-TW!2stw&hl=zh-TW" 
-        width="800" 
-        height="600" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-
-
-
-
-
-
-
-      </section>
-      
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14453.573507643074!2d121.52558089999998!3d25.0885419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442aeb9be771d11%3A0x5bb870c52d359c9c!2zMTEx5Y-w5YyX5biC5aOr5p6X5Y2A5Lit5q2j6LevNDk16Jmf!5e0!3m2!1szh-TW!2stw&hl=zh-TW" 
+      width="800" 
+      height="600" 
+      style="border:0;" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </section>
   </main>
 
   <footer class="site-footer">

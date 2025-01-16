@@ -7,356 +7,379 @@
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css"/>
   <style>
+    /* 全局樣式 */
+    :root {
+      --accent-color: #2563eb;
+      --hover-accent: #1d4ed8;
+    }
 
-/* 全局樣式 */
-:root {
-  --accent-color: #2563eb;
-  --hover-accent: #1d4ed8;
+    /* 主要布局 */
+    main {
+      display: flex;
+      min-height: 80vh;
+      flex-direction: row;
+      background-color: #f8fafc;
+    }
+
+
+
+
+
+/* 定義漸入動畫 */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px); /* 從左側移入 */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* 主要布局 */
-main {
-  display: flex;
-  min-height: 80vh;
-  flex-direction: row;
-  background-color: #f8fafc;
-}
-
-/* 左側篩選側邊欄 */
+/* 應用動畫到側邊欄 */
 .filter-sidebar {
-  padding: 2rem 1.5rem;
-  width: 250px;
-  position: fixed;
-  top: 150px; /* 根據 header 高度調整 */
-  overflow-y: auto; /* 如果內容過多，允許滾動 */
-  z-index: 1000; /* 確保側邊欄在其他內容之上 */
+  opacity: 0; /* 初始狀態為隱藏 */
+  transform: translateX(-20px); /* 初始位移 */
+  animation: fadeInLeft 0.5s ease forwards; /* 動畫持續時間和緩動效果 */
+  animation-delay: 0.3s; /* 延遲 0.3 秒後開始動畫 */
 }
 
-.filter-sidebar h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #e2e8f0;
-}
 
-.filter-sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    /* 左側篩選側邊欄 */
+    .filter-sidebar {
+      opacity: 0; /* 初始狀態為隱藏 */
+      padding: 2rem 1.5rem;
+      width: 250px;
+      position: fixed;
+      top: 150px; /* 根據 header 高度調整 */
+      overflow-y: auto; /* 如果內容過多，允許滾動 */
+      z-index: 1000; /* 確保側邊欄在其他內容之上 */
+    }
+
+    .filter-sidebar h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .filter-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .filter-btn {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.filter-btn {
-  width: 100%;
-  padding: 0.75rem 1rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
   border: 1px solid #e2e8f0;
   border-radius: 0.75rem;
   background-color: white;
-  color: #475569;
-  font-size: 0.95rem;
-  text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
 }
 
 .filter-btn:hover {
   background-color: #f8fafc;
   border-color: #cbd5e1;
-  color: #0f172a;
   transform: translateX(4px);
 }
 
 .filter-btn.active {
   background-color: #f1f5f9;
   border-color: #94a3b8;
-  color: #0f172a;
-  font-weight: 500;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* 產品列表區域 */
-.products-grid {
-  flex: 1;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-/* 產品卡片基本樣式 */
-.product-card {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
-  max-width: 56rem;
-  margin: 0 auto;
-  width: 100%;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.5s ease forwards;
-}
-
-.product-card:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* 產品卡片動畫 */
-.product-card:nth-child(1) { animation-delay: 0.1s; }
-.product-card:nth-child(2) { animation-delay: 0.2s; }
-.product-card:nth-child(3) { animation-delay: 0.3s; }
-.product-card:nth-child(4) { animation-delay: 0.4s; }
-.product-card:nth-child(5) { animation-delay: 0.5s; }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* 產品圖片 */
-.product-image {
-  width: 8rem;
-  height: 8rem;
+.filter-icon {
+  width: 60px; /* 調整圖片大小 */
+  height: 60px; /* 調整圖片大小 */
   object-fit: contain;
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
-.product-image:hover {
-  transform: scale(1.05);
-}
+    /* 產品列表區域 */
+    .products-grid {
+      flex: 1;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
 
-/* 產品資訊區 */
-.product-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  width: 10rem;
-}
+    /* 產品卡片基本樣式 */
+    .product-card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+      max-width: 56rem;
+      margin: 0 auto;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s ease forwards;
+    }
 
-.product-info h3 {
-  font-size: 1.875rem;
-  font-weight: bold;
-  margin: 0;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
+    .product-card:hover {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-.product-info h3:hover {
-  color: var(--accent-color);
-}
+    /* 產品卡片動畫 */
+    .product-card:nth-child(1) { animation-delay: 0.1s; }
+    .product-card:nth-child(2) { animation-delay: 0.2s; }
+    .product-card:nth-child(3) { animation-delay: 0.3s; }
+    .product-card:nth-child(4) { animation-delay: 0.4s; }
+    .product-card:nth-child(5) { animation-delay: 0.5s; }
 
-/* Add 按鈕 */
-.add-btn {
-  background-color: var(--accent-color);
-  color: white;
-  padding: 0.5rem 2rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-.add-btn:hover {
-  background-color: var(--hover-accent);
-  transform: translateY(-1px);
-}
+    /* 產品圖片 */
+    .product-image {
+      width: 8rem;
+      height: 8rem;
+      object-fit: contain;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
 
-.add-btn:active {
-  transform: translateY(0);
-}
+    .product-image:hover {
+      transform: scale(1.05);
+    }
 
-/* 產品詳細資訊 */
-.product-details {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+    /* 產品資訊區 */
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 10rem;
+    }
 
-.product-details p {
-  margin: 0;
-  color: #4b5563;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
+    .product-info h3 {
+      font-size: 1.875rem;
+      font-weight: bold;
+      margin: 0;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
 
-/* 右側比較側邊欄 */
-.compare-sidebar {
-  background: linear-gradient(to bottom, #ffffff, #f8fafc);
-  border-left: 1px solid #e2e8f0;
-  padding: 2rem 1.5rem;
-  width: 250px;
-  position: fixed;
-  top: 150px; /* 根據 header 高度調整 */
-  right: 0;
-  overflow-y: auto; /* 如果內容過多，允許滾動 */
-  z-index: 1000; /* 確保側邊欄在其他內容之上 */
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.02);
-}
+    .product-info h3:hover {
+      color: var(--accent-color);
+    }
 
-.compare-sidebar.hidden {
-  transform: translateX(100%);
-}
+    /* Add 按鈕 */
+    .add-btn {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.5rem 2rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
 
-.compare-sidebar h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #e2e8f0;
-}
+    .add-btn:hover {
+      background-color: var(--hover-accent);
+      transform: translateY(-1px);
+    }
 
-#compare-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1.5rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
+    .add-btn:active {
+      transform: translateY(0);
+    }
 
-.compare-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  background-color: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.75rem;
-  color: #475569;
-  font-size: 0.95rem;
-}
+    /* 產品詳細資訊 */
+    .product-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
 
-.remove-btn {
-  background: none;
-  border: none;
-  color: #ef4444;
-  cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 0.375rem;
-  transition: all 0.2s ease;
-}
+    .product-details p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
 
-.remove-btn:hover {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
+    /* 右側比較側邊欄 */
+    .compare-sidebar {
+      background: linear-gradient(to bottom, #ffffff, #f8fafc);
+      border-left: 1px solid #e2e8f0;
+      padding: 2rem 1.5rem;
+      width: 250px;
+      position: fixed;
+      top: 150px; /* 根據 header 高度調整 */
+      right: 0;
+      overflow-y: auto; /* 如果內容過多，允許滾動 */
+      z-index: 1000; /* 確保側邊欄在其他內容之上 */
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.02);
+    }
 
-#compare-btn {
-  width: 100%;
-  padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white;
-  border: none;
-  border-radius: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
-}
+    .compare-sidebar.hidden {
+      transform: translateX(100%);
+    }
 
-#compare-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-}
+    .compare-sidebar h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
 
-#compare-btn:active {
-  transform: translateY(0);
-}
+    #compare-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
 
-#compare-btn.hidden {
-  display: none;
-}
+    .compare-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background-color: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      color: #475569;
+      font-size: 0.95rem;
+    }
 
-/* 適配深色模式 */
-@media (prefers-color-scheme: dark) {
-  main {
-    background-color: #0f172a;
-  }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 0.375rem;
+      transition: all 0.2s ease;
+    }
 
-  .filter-sidebar,
-  .compare-sidebar {
-    background: linear-gradient(to bottom, #1e293b, #0f172a);
-    border-color: #334155;
-  }
+    .remove-btn:hover {
+      background-color: #fee2e2;
+      color: #dc2626;
+    }
 
-  .filter-sidebar h3,
-  .compare-sidebar h3 {
-    color: #f1f5f9;
-    border-bottom-color: #334155;
-  }
+    #compare-btn {
+      width: 100%;
+      padding: 0.875rem 1.5rem;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.1);
+    }
 
-  .filter-btn,
-  .compare-item {
-    background-color: #1e293b;
-    border-color: #334155;
-    color: #e2e8f0;
-  }
+    #compare-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
 
-  .filter-btn:hover {
-    background-color: #334155;
-    border-color: #475569;
-    color: #f8fafc;
-  }
+    #compare-btn:active {
+      transform: translateY(0);
+    }
 
-  .filter-btn.active {
-    background-color: #2d3748;
-    border-color: #64748b;
-    color: #f8fafc;
-  }
+    #compare-btn.hidden {
+      display: none;
+    }
 
-  .product-card {
-    background-color: #1e293b;
-    border-color: #334155;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  }
+    /* 適配深色模式 */
+    @media (prefers-color-scheme: dark) {
+      main {
+        background-color: #0f172a;
+      }
 
-  .product-card:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  }
+      .filter-sidebar,
+      .compare-sidebar {
+        background: linear-gradient(to bottom, #1e293b, #0f172a);
+        border-color: #334155;
+      }
 
-  .product-details p {
-    color: #e2e8f0;
-  }
+      .filter-sidebar h3,
+      .compare-sidebar h3 {
+        color: #f1f5f9;
+        border-bottom-color: #334155;
+      }
 
-  .remove-btn:hover {
-    background-color: #991b1b;
-    color: #fecaca;
-  }
+      .filter-btn,
+      .compare-item {
+        background-color: #1e293b;
+        border-color: #334155;
+        color: #e2e8f0;
+      }
 
-  #compare-btn {
-    background: linear-gradient(135deg, #1d4ed8, #1e40af);
-  }
-}
+      .filter-btn:hover {
+        background-color: #334155;
+        border-color: #475569;
+        color: #f8fafc;
+      }
 
+      .filter-btn.active {
+        background-color: #2d3748;
+        border-color: #64748b;
+        color: #f8fafc;
+      }
+
+      .product-card {
+        background-color: #1e293b;
+        border-color: #334155;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .product-card:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .product-details p {
+        color: #e2e8f0;
+      }
+
+      .remove-btn:hover {
+        background-color: #991b1b;
+        color: #fecaca;
+      }
+
+      #compare-btn {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      }
+
+      
+    }
   </style>
-    
-  </html>
-
-  <body class="invisible">
+</head>
+<body class="invisible">
   <header class="site-header">
     <div class="logo-area">
       <a href="index.html">
@@ -382,34 +405,32 @@ main {
     </div>
   </header>
 
-
   <main>
-    <aside class="filter-sidebar">
-      <h3 data-i18n="filterTitle">應用篩選</h3>
+    <aside class="filter-sidebar fade-in-left">
       <ul>
         <li>
           <button class="filter-btn" data-filter="Drone">
-            Drone
+            <img src="images/sidebar-drone.png" alt="Drone" class="filter-icon" />
           </button>
         </li>
         <li>
           <button class="filter-btn" data-filter="Automotive">
-            Automotive
+            <img src="images/sidebar-automotive.png" alt="Automotive" class="filter-icon" />
           </button>
         </li>
         <li>
           <button class="filter-btn" data-filter="Smart Traffic">
-            Smart Traffic
+            <img src="images/sidebar-smart-traffic.png" alt="Smart Traffic" class="filter-icon" />
           </button>
         </li>
         <li>
           <button class="filter-btn" data-filter="Robot">
-            Robot
+            <img src="images/sidebar-robot.png" alt="Robot" class="filter-icon" />
           </button>
         </li>
         <li>
           <button class="filter-btn" data-filter="Indoor Person">
-            Indoor Person
+            <img src="images/sidebar-indoor-person.png" alt="Indoor Person Detection" class="filter-icon" />
           </button>
         </li>
       </ul>
@@ -429,366 +450,289 @@ main {
     </aside>
   </main>
 
-
-
-  
-  
-
   <footer class="site-footer">
     <p>© 2025 LuxWave. All rights reserved.</p>
   </footer>
 
-
   <!-- 主程式碼 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // 預設載入語系（如果沒有指定就用選擇器的值）
-      let currentLanguage = document.getElementById('languageSelect').value;
 
-      // 載入產品資料
-      loadProducts(currentLanguage).then(() => {
-        // 讓 body 顯示（若有做 loading 動畫可在這裡移除）
-        document.body.classList.remove('invisible');
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // 獲取語言選擇器
+    const languageSelect = document.getElementById('languageSelect');
+
+    // 初始載入時，根據預設語言更新篩選側邊欄
+    const initialLanguage = languageSelect.value;
+    updateFilterSidebar(initialLanguage);
+
+    // 監聽語言選擇器的 change 事件
+    languageSelect.addEventListener('change', (e) => {
+      const selectedLanguage = e.target.value; // 獲取選擇的語言值
+      updateFilterSidebar(selectedLanguage); // 更新篩選側邊欄
+    });
+
+    // 預設載入語系（如果沒有指定就用選擇器的值）
+    let currentLanguage = document.getElementById('languageSelect').value;
+
+    // 載入產品資料
+    loadProducts(currentLanguage).then(() => {
+      // 讓 body 顯示（若有做 loading 動畫可在這裡移除）
+      document.body.classList.remove('invisible');
+    });
+
+    // 語言選擇事件
+    document.getElementById('languageSelect').addEventListener('change', (e) => {
+      currentLanguage = e.target.value;
+      loadProducts(currentLanguage);
+      updateFilterSidebar(currentLanguage); // 更新篩選側邊欄
+    });
+
+    // 篩選按鈕事件
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        applyFilter(btn.getAttribute('data-filter'));
       });
+    });
 
+    // 讀取 CSV 並建立產品卡
+    async function loadProducts(language) {
+      try {
+        // 根據語言載入對應檔案，若語言值是 zh-tw，對應檔案 Radar_Product_Details-zh-tw.csv
+        // const response = await fetch(`Radar_Product_Details-${language}.csv`);
+        const response = await fetch(`Radar_Product_Details-en-us.csv`);
 
-      // 語言選擇事件
-      document.getElementById('languageSelect').addEventListener('change', (e) => {
-        currentLanguage = e.target.value;
-        loadProducts(currentLanguage);
-      });
+        if (!response.ok) {
+          console.error(`無法載入：Radar_Product_Details-${language}.csv`);
+          return;
+        }
 
-      // 篩選按鈕事件
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          applyFilter(btn.getAttribute('data-filter'));
+        const data = await response.text();
+        const rows = data.split("\n").filter(row => row.trim() !== "");
+        const headers = rows[0].split(",").map(header => header.trim());
+
+        // 建立 products 陣列
+        const products = rows.slice(1).map(row => {
+          const values = row.split(",").map(v => v.trim());
+          const product = {};
+          headers.forEach((header, index) => {
+            product[header] = values[index] || "N/A";
+          });
+          return product;
         });
+
+        // 將 products 暫存到全域（或局部）變數，以便篩選使用
+        window.allProducts = products;
+        renderProducts(products);
+      } catch (error) {
+        console.error("載入產品資料時發生錯誤：", error);
+      }
+    }
+
+    // 渲染產品卡
+    function renderProducts(productsArray) {
+      const grid = document.querySelector('.products-grid');
+
+      // 清空網格前先做淡出動畫
+      const oldCards = grid.querySelectorAll('.product-card');
+      oldCards.forEach(card => {
+        card.style.animation = 'none';
+        card.style.opacity = '0';
       });
 
-      // 讀取 CSV 並建立產品卡
-      async function loadProducts(language) {
-        try {
-          // 根據語言載入對應檔案，若語言值是 zh-tw，對應檔案 Radar_Product_Details-zh-tw.csv
-          // const response = await fetch(`Radar_Product_Details-${language}.csv`);
-          const response = await fetch(`Radar_Product_Details-en-us.csv`);
+      // 短暫延遲後再重新渲染
+      setTimeout(() => {
+        grid.innerHTML = '';
 
-          if (!response.ok) {
-            console.error(`無法載入：Radar_Product_Details-${language}.csv`);
-            return;
-          }
+        // 獲取當前語言
+        const currentLanguage = document.getElementById('languageSelect').value;
 
-          const data = await response.text();
-          const rows = data.split("\n").filter(row => row.trim() !== "");
-          const headers = rows[0].split(",").map(header => header.trim());
+        productsArray.forEach((product, index) => {
+          const card = document.createElement('div');
+          card.classList.add('product-card');
 
-          // 建立 products 陣列
-          const products = rows.slice(1).map(row => {
-            const values = row.split(",").map(v => v.trim());
-            const product = {};
-            headers.forEach((header, index) => {
-              product[header] = values[index] || "N/A";
+          // 設置動畫延遲
+          card.style.animationDelay = `${index * 0.1}s`;
+
+          card.innerHTML = `
+            <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
+                 alt="${product['Product Name']}" 
+                 class="product-image">
+            <div class="product-info">
+              <h3 class="product-name">${product['Product Name']}</h3>
+              <button class="add-btn" data-name="${product['Product Name']}"></button>
+            </div>
+            <div class="product-details">
+              <p>${product.Applications}</p>
+                <p data-i18n="measurementRange">Measurement Range: ${product['Measurement Range']}</p>
+                <p data-i18n="dimensions">Dimensions: ${product.Dimensions}</p>
+                <p data-i18n="frequencyRange">Frequency Range: ${product['Frequency Range']}</p>
+            </div>
+          `;
+
+          // 根據當前語言設置按鈕文字
+          const addButton = card.querySelector('.add-btn');
+          addButton.textContent = translations[currentLanguage].addButton;
+
+          // 添加點擊事件到產品圖片和產品型號
+          const imageEl = card.querySelector('.product-image');
+          const nameEl = card.querySelector('.product-name');
+
+          [imageEl, nameEl].forEach(el => {
+            el.addEventListener('click', () => {
+              window.location.href = `comparison.html?products=${encodeURIComponent(product['Product Name'])}`;
             });
-            return product;
+            el.style.cursor = 'pointer';
           });
 
-          // 將 products 暫存到全域（或局部）變數，以便篩選使用
-          window.allProducts = products;
-          renderProducts(products);
-        } catch (error) {
-          console.error("載入產品資料時發生錯誤：", error);
-        }
+          // 添加比較按鈕事件
+          addButton.addEventListener('click', () => {
+            addToCompare(product);
+          });
+
+          grid.appendChild(card);
+        });
+      }, 100); // 給予 100ms 的延遲以確保動畫順暢
+    }
+
+    // 加入比較
+    function addToCompare(product) {
+      const compareSidebar = document.querySelector('.compare-sidebar');
+      const compareList = document.getElementById('compare-list');
+      const compareBtn = document.getElementById('compare-btn');
+
+      // 檢查是否已經加入該產品
+      const existingProduct = compareList.querySelector(`[data-product="${product['Product Name']}"]`);
+      if (existingProduct) {
+        return; // 如果產品已存在，不重複添加
       }
 
+      // 顯示側邊欄
+      compareSidebar.classList.remove('hidden');
 
-// 渲染產品卡
-function renderProducts(productsArray) {
-  const grid = document.querySelector('.products-grid');
-  
-  // 清空網格前先做淡出動畫
-  const oldCards = grid.querySelectorAll('.product-card');
-  oldCards.forEach(card => {
-    card.style.animation = 'none';
-    card.style.opacity = '0';
-  });
-  
-  // 短暫延遲後再重新渲染
-  setTimeout(() => {
-    grid.innerHTML = '';
-    
-    // 獲取當前語言
-    const currentLanguage = document.getElementById('languageSelect').value;
-    
-    productsArray.forEach((product, index) => {
-      const card = document.createElement('div');
-      card.classList.add('product-card');
-      
-      // 設置動畫延遲
-      card.style.animationDelay = `${index * 0.1}s`;
-      
-      card.innerHTML = `
-        <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
-             alt="${product['Product Name']}" 
-             class="product-image">
-        <div class="product-info">
-          <h3 class="product-name">${product['Product Name']}</h3>
-          <button class="add-btn" data-name="${product['Product Name']}"></button>
-        </div>
-        <div class="product-details">
-          <p>${product.Applications}</p>
-          <p>Measurement Range: ${product['Measurement Range']}</p>
-          <p>Dimensions: ${product.Dimensions}</p>
-          <p>Frequency Range: ${product['Frequency Range']}</p>
-        </div>
+      // 創建新的比較項目
+      const item = document.createElement('li');
+      item.classList.add('compare-item');
+      item.setAttribute('data-product', product['Product Name']);
+
+      item.innerHTML = `
+        <span>${product['Product Name']}</span>
+        <button class="remove-btn" aria-label="移除 ${product['Product Name']}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       `;
 
-      // 根據當前語言設置按鈕文字
-      const addButton = card.querySelector('.add-btn');
-      addButton.textContent = translations[currentLanguage].addButton;
+      // 添加移除按鈕事件
+      const removeBtn = item.querySelector('.remove-btn');
+      removeBtn.addEventListener('click', () => {
+        item.remove();
 
-      // 添加點擊事件到產品圖片和產品型號
-      const imageEl = card.querySelector('.product-image');
-      const nameEl = card.querySelector('.product-name');
-      
-      [imageEl, nameEl].forEach(el => {
-        el.addEventListener('click', () => {
-          window.location.href = `comparison.html?products=${encodeURIComponent(product['Product Name'])}`;
-        });
-        el.style.cursor = 'pointer';
+        // 如果沒有產品了，隱藏側邊欄
+        if (compareList.children.length === 0) {
+          compareSidebar.classList.add('hidden');
+        }
+
+        // 更新比較按鈕顯示狀態
+        updateCompareButtonVisibility();
       });
 
-      // 添加比較按鈕事件
-      addButton.addEventListener('click', () => {
-        addToCompare(product);
+      compareList.appendChild(item);
+
+      // 更新比較按鈕顯示狀態
+      updateCompareButtonVisibility();
+    }
+
+    // 更新比較按鈕顯示狀態
+    function updateCompareButtonVisibility() {
+      const compareList = document.getElementById('compare-list');
+      const compareBtn = document.getElementById('compare-btn');
+
+      if (compareList.children.length >= 2) {
+        compareBtn.classList.remove('hidden');
+
+        // 更新比較按鈕點擊事件
+        compareBtn.onclick = () => {
+          // 獲取所有選擇的產品名稱
+          const productsToCompare = Array.from(compareList.children)
+            .map(li => li.getAttribute('data-product'));
+
+          // 將產品名稱以逗號分隔，並進行 URL 編碼
+          const productsQuery = productsToCompare.map(product => encodeURIComponent(product)).join('%2C');
+
+          // 導向到 comparison.html 頁面
+          window.location.href = `comparison.html?products=${productsQuery}`;
+        };
+      } else {
+        compareBtn.classList.add('hidden');
+      }
+    }
+
+    // 套用篩選
+    function applyFilter(filterKey) {
+      if (!window.allProducts) return;
+
+      let filtered = [];
+      switch (filterKey) {
+        case 'Drone':
+          filtered = window.allProducts.filter(p =>
+            p.Applications.includes('Drone Obstacle Avoidance and Terrain Following')
+          );
+          break;
+        case 'Automotive':
+          filtered = window.allProducts.filter(p =>
+            p.Applications.includes('Automotive Front Obstacle Avoidance Radar') ||
+            p.Applications.includes('Automotive Corner Radar')
+          );
+          break;
+        case 'Smart Traffic':
+          filtered = window.allProducts.filter(p =>
+            p.Applications.includes('Smart Traffic Radar')
+          );
+          break;
+        case 'Robot':
+          filtered = window.allProducts.filter(p =>
+            p.Applications.includes('Robot Obstacle Avoidance Radar')
+          );
+          break;
+        case 'Indoor Person':
+          filtered = window.allProducts.filter(p =>
+            p.Applications.includes('Indoor Personnel Detection Radar')
+          );
+          break;
+        default:
+          filtered = window.allProducts;
+      }
+
+      // 更新活動按鈕狀態
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-filter') === filterKey) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
       });
 
-      grid.appendChild(card);
-    });
-  }, 100); // 給予 100ms 的延遲以確保動畫順暢
-}
-
-
-
-      // 加入比較
-// 加入比較
-function addToCompare(product) {
-  const compareSidebar = document.querySelector('.compare-sidebar');
-  const compareList = document.getElementById('compare-list');
-  const compareBtn = document.getElementById('compare-btn');
-  
-  // 檢查是否已經加入該產品
-  const existingProduct = compareList.querySelector(`[data-product="${product['Product Name']}"]`);
-  if (existingProduct) {
-    return; // 如果產品已存在，不重複添加
-  }
-
-  // 顯示側邊欄
-  compareSidebar.classList.remove('hidden');
-
-  // 創建新的比較項目
-  const item = document.createElement('li');
-  item.classList.add('compare-item');
-  item.setAttribute('data-product', product['Product Name']);
-  
-  item.innerHTML = `
-    <span>${product['Product Name']}</span>
-    <button class="remove-btn" aria-label="移除 ${product['Product Name']}">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-  `;
-
-  // 添加移除按鈕事件
-  const removeBtn = item.querySelector('.remove-btn');
-  removeBtn.addEventListener('click', () => {
-    item.remove();
-    
-    // 如果沒有產品了，隱藏側邊欄
-    if (compareList.children.length === 0) {
-      compareSidebar.classList.add('hidden');
+      renderProducts(filtered);
     }
-    
-    // 更新比較按鈕顯示狀態
-    updateCompareButtonVisibility();
+
+    // 更新篩選側邊欄的內容
+    function updateFilterSidebar(language) {
+      const filterTitle = document.querySelector('.filter-sidebar h3');
+      const filterButtons = document.querySelectorAll('.filter-sidebar .filter-btn');
+
+
+    }
+
+
   });
 
-  compareList.appendChild(item);
   
-  // 更新比較按鈕顯示狀態
-  updateCompareButtonVisibility();
-}
-
-// 更新比較按鈕顯示狀態
-// 加入比較
-function addToCompare(product) {
-  const compareSidebar = document.querySelector('.compare-sidebar');
-  const compareList = document.getElementById('compare-list');
-  const compareBtn = document.getElementById('compare-btn');
-  
-  // 檢查是否已經加入該產品
-  const existingProduct = compareList.querySelector(`[data-product="${product['Product Name']}"]`);
-  if (existingProduct) {
-    return; // 如果產品已存在，不重複添加
-  }
-
-  // 顯示側邊欄
-  compareSidebar.classList.remove('hidden');
-
-  // 創建新的比較項目
-  const item = document.createElement('li');
-  item.classList.add('compare-item');
-  item.setAttribute('data-product', product['Product Name']);
-  
-  item.innerHTML = `
-    <span>${product['Product Name']}</span>
-    <button class="remove-btn" aria-label="移除 ${product['Product Name']}">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-  `;
-
-  // 添加移除按鈕事件
-  const removeBtn = item.querySelector('.remove-btn');
-  removeBtn.addEventListener('click', () => {
-    item.remove();
-    
-    // 如果沒有產品了，隱藏側邊欄
-    if (compareList.children.length === 0) {
-      compareSidebar.classList.add('hidden');
-    }
-    
-    // 更新比較按鈕顯示狀態
-    updateCompareButtonVisibility();
-  });
-
-  compareList.appendChild(item);
-  
-  // 更新比較按鈕顯示狀態
-  updateCompareButtonVisibility();
-}
-
-// 更新比較按鈕顯示狀態
-function updateCompareButtonVisibility() {
-  const compareList = document.getElementById('compare-list');
-  const compareBtn = document.getElementById('compare-btn');
-  
-  if (compareList.children.length >= 2) {
-    compareBtn.classList.remove('hidden');
-    
-    // 更新比較按鈕點擊事件
-    compareBtn.onclick = () => {
-      // 獲取所有選擇的產品名稱
-      const productsToCompare = Array.from(compareList.children)
-        .map(li => li.getAttribute('data-product'));
-      
-      // 將產品名稱以逗號分隔，並進行 URL 編碼
-      const productsQuery = productsToCompare.map(product => encodeURIComponent(product)).join('%2C');
-      
-      // 導向到 comparison.html 頁面
-      window.location.href = `comparison.html?products=${productsQuery}`;
-    };
-  } else {
-    compareBtn.classList.add('hidden');
-  }
-}   
-
-// 更新比較按鈕顯示狀態
-// 更新比較按鈕顯示狀態
-// 更新比較按鈕顯示狀態
-function updateCompareButtonVisibility() {
-  const compareList = document.getElementById('compare-list');
-  const compareBtn = document.getElementById('compare-btn');
-  
-  if (compareList.children.length >= 2) {
-    compareBtn.classList.remove('hidden');
-    
-    // 更新比較按鈕點擊事件
-    compareBtn.onclick = () => {
-      // 獲取所有選擇的產品名稱
-      const productsToCompare = Array.from(compareList.children)
-        .map(li => li.getAttribute('data-product'));
-      
-      // 將產品名稱以逗號分隔，並進行 URL 編碼
-      const productsQuery = productsToCompare.map(product => encodeURIComponent(product)).join('%2C');
-      
-      // 導向到 comparison.html 頁面
-      window.location.href = `comparison.html?products=${productsQuery}`;
-    };
-  } else {
-    compareBtn.classList.add('hidden');
-  }
-} 
-
-// 套用篩選
-      function applyFilter(filterKey) {
-  if (!window.allProducts) return;
-
-  let filtered = [];
-  switch (filterKey) {
-    case 'Drone':
-      filtered = window.allProducts.filter(p => 
-        p.Applications.includes('Drone Obstacle Avoidance and Terrain Following')
-      );
-      break;
-    case 'Automotive':
-      filtered = window.allProducts.filter(p =>
-        p.Applications.includes('Automotive Front Obstacle Avoidance Radar') ||
-        p.Applications.includes('Automotive Corner Radar')
-      );
-      break;
-    case 'Smart Traffic':
-      filtered = window.allProducts.filter(p => 
-        p.Applications.includes('Smart Traffic Radar')
-      );
-      break;
-    case 'Robot':
-      filtered = window.allProducts.filter(p => 
-        p.Applications.includes('Robot Obstacle Avoidance Radar')
-      );
-      break;
-    case 'Indoor Person':
-      filtered = window.allProducts.filter(p => 
-        p.Applications.includes('Indoor Personnel Detection Radar')
-      );
-      break;
-    default:
-      filtered = window.allProducts;
-  }
-
-  // 更新活動按鈕狀態
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    if (btn.getAttribute('data-filter') === filterKey) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
-
-  renderProducts(filtered);
-}
-    });
+</script>
 
 
-
-// 更新篩選側邊欄的內容
-function updateFilterSidebar(language) {
-  const filterTitle = document.querySelector('.filter-sidebar h3');
-  const filterButtons = document.querySelectorAll('.filter-sidebar .filter-btn');
-
-  // 更新標題
-  filterTitle.textContent = translations[language].filterTitle;
-
-  // 更新按鈕文字
-  filterButtons[0].textContent = translations[language].filterDrone;
-  filterButtons[1].textContent = translations[language].filterAutomotive;
-  filterButtons[2].textContent = translations[language].filterSmartTraffic;
-  filterButtons[3].textContent = translations[language].filterRobot;
-  filterButtons[4].textContent = translations[language].filterIndoorPerson;
-}
-  </script>
 
   <script src="translations.js"></script>
   <script src="script.js"></script>
