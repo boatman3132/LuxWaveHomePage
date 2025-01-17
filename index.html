@@ -7,7 +7,6 @@
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* 漸入動畫 */
     @keyframes fadeIn {
       from {
         opacity: 0;
@@ -19,11 +18,13 @@
       }
     }
 
-    /* 應用漸入動畫 */
     .site-header,
     .hero,
     .features,
-    .site-footer {
+    .site-footer,
+    .company-intro,
+    .our-solutions,
+    .future-radar {
       opacity: 0;
       animation: fadeIn 0.8s ease forwards;
     }
@@ -40,8 +41,61 @@
       animation-delay: 0.6s;
     }
 
-    .site-footer {
+    .company-intro {
       animation-delay: 0.8s;
+    }
+
+    .our-solutions {
+      animation-delay: 1s;
+    }
+
+    .future-radar {
+      animation-delay: 1.2s;
+    }
+
+    .site-footer {
+      animation-delay: 1.4s;
+    }
+
+    .company-intro {
+      padding: 40px 20px;
+      background-color: rgb(245, 248, 255);
+    }
+
+    .intro-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .intro-content h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .intro-content p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .our-solutions,
+    .future-radar {
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+      text-align: center;
+    }
+
+    .our-solutions h2,
+    .future-radar h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+
+    .our-solutions p,
+    .future-radar p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -73,12 +127,34 @@
 
   <section class="hero">
     <div class="hero-content">
-      <h2 data-i18n="heroTitle">領先的毫米波雷達解決方案</h2>
-      <p data-i18n="heroSubtitle">精準 · 穩定 · 多元應用</p>
+      <h1 data-i18n="companyIntroTitle">Welcome to LuxWave Ltd.</h1>
+
       <video controls autoplay muted width="600" poster="images/demo-poster.jpg">
         <source src="images/demo-video.mp4" type="video/mp4" />
         您的瀏覽器不支援影片播放。
       </video>
+    </div>
+
+  </section>
+
+  <section class="company-intro">
+    <div class="intro-content">
+      <br></br>
+      <h2 data-i18n="companyIntroDesc1">Innovating the Future of Radar Technology</h2>
+      <p data-i18n="companyIntroDesc2">Founded in 2025, LuxWave Ltd. is a leading provider of cutting-edge millimeter-wave (mmWave) radar module solutions. At LuxWave, we are committed to advancing radar technology, offering precision, reliability, and efficiency for a wide range of industries.</p>
+      <p data-i18n="companyIntroDesc3">Our primary focus is on developing high-performance radar systems for applications in UAVs, drones, automotive, traffic monitoring, and more. We specialize in providing customized solutions that enhance safety, navigation, and environmental awareness, empowering businesses to deploy intelligent systems across various sectors.</p>
+    </div>
+
+    <div class="intro-content">
+      <h2 data-i18n="ourSolutionsTitle">Our Solutions</h2>
+      <p data-i18n="ourSolutionsDesc1">LuxWave’s radar modules are designed to meet the growing demands for high-resolution, long-range sensing in complex environments. Whether you're integrating our technology into UAVs, autonomous vehicles, or smart city infrastructure, our mmWave radar modules deliver exceptional performance in a compact form factor, providing precise detection and real-time data to enhance decision-making.</p>
+    </div>
+
+    <div class="intro-content">
+      <h2 data-i18n="futureRadarTitle">The Future of Radar Technology</h2>
+      <p data-i18n="futureRadarDesc1">Looking ahead, LuxWave is expanding its technology to include radar and vision fusion solutions. By combining mmWave radar with 2D and 3D cameras, we will offer an innovative solution that integrates the strengths of both radar and visual technologies for improved perception, enabling even more advanced autonomous systems.</p>
+      <p data-i18n="futureRadarDesc2">At LuxWave, we are dedicated to leading the way in radar and sensor technologies, driving the future of intelligent, connected systems that will transform industries worldwide.</p>
+      <h3 data-i18n="companyIntroDesc7">Join us as we create smarter, safer, and more efficient solutions for tomorrow’s world.</h3>
     </div>
   </section>
 

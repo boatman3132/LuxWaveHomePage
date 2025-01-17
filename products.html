@@ -648,7 +648,7 @@
           // 設置動畫延遲
           card.style.animationDelay = `${index * 0.1}s`;
 
-          card.innerHTML = `
+          card.innerHTML += `
             <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
                  alt="${product['Product Name']}" 
                  class="product-image">
@@ -656,6 +656,9 @@
               <h3 class="product-name">${product['Product Name']}</h3>
               <button class="add-btn" data-name="${product['Product Name']}"></button>
             </div>
+            `;
+
+            card.innerHTML += `
             <div class="product-details">
               <p>${product.Applications}</p>
                 <p data-i18n="measurementRange">Measurement Range: ${product['Measurement Range']}</p>
