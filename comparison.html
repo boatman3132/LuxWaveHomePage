@@ -126,6 +126,27 @@
     .comparison-table tr:nth-child(13) { animation-delay: 0.65s; }
     .comparison-table tr:nth-child(14) { animation-delay: 0.7s; }
     .comparison-table tr:nth-child(15) { animation-delay: 0.75s; }
+
+
+    /* 下載按鈕樣式 */
+    .download-btn {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .download-btn:hover {
+      background-color: var(--hover-accent);
+      transform: translateY(-1px);
+    }
+
+    .download-btn:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body class="invisible">
@@ -261,6 +282,16 @@ async function loadProducts(csvFileName) {
   }
 }
 
+
+function applyTranslations(lang) {
+  const elements = document.querySelectorAll("[data-i18n]");
+  elements.forEach((el) => {
+    const key = el.getAttribute("data-i18n");
+    el.textContent = translations[lang][key] || key;
+  });
+}
+
+
 // 渲染比較表格
 function renderComparisonTable(products, productNameHeader) {
   const table = document.getElementById('comparison-table');
@@ -303,10 +334,23 @@ function renderComparisonTable(products, productNameHeader) {
     tbody.appendChild(row);
   });
 
+  // 添加下載文件欄位
+  const downloadRow = document.createElement('tr');
+  downloadRow.innerHTML = `<td data-i18n="downloadFile">下載</td>`;
+  products.forEach(product => {
+    const productName = product[productNameHeader].toLowerCase().replace(/\s+/g, '-');
+    const pdfPath = `document/DataSheet-${productName}.pdf`;
+    downloadRow.innerHTML += `
+      <td>
+        <a href="${pdfPath}" download class="download-btn">下載 PDF</a>
+      </td>
+    `;
+  });
+  tbody.appendChild(downloadRow);
+
   // 顯示表格
   table.style.opacity = 1;
 }
-
 
   </script>
 
