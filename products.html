@@ -648,6 +648,105 @@
           // 設置動畫延遲
           card.style.animationDelay = `${index * 0.1}s`;
 
+          let translated_product_application = product.Applications;
+          const currentLanguage = document.getElementById('languageSelect').value;
+
+
+if (currentLanguage === 'zh-TW') {
+  measurement = "測量範圍";
+  Dimensions = "尺寸";
+  Frequency = "頻率範圍";
+  if (product.Applications === 'Drone Obstacle Avoidance and Terrain Following') {
+    product_application = '無人機避障與防地飛行';
+  }
+  if (product.Applications === 'Automotive Corner Radar') {
+    product_application = '汽車角雷達';
+  }
+  if (product.Applications === 'Automotive Front Obstacle Avoidance Radar') {
+    product_application = '汽車前向避障雷達';
+  }
+  if (product.Applications === 'Smart Traffic Radar') {
+    product_application = '智慧交通';
+  }
+  if (product.Applications === 'Robot Obstacle Avoidance Radar') {
+    product_application = '機器人避障';
+  }
+  if (product.Applications === 'Indoor Personnel Detection Radar') {
+    product_application = '室內人員檢測';
+  }
+} else if (currentLanguage === 'zh-CN') {
+  measurement = "测量范围";
+  Dimensions = "尺寸";
+  Frequency = "频率范围";
+  if (product.Applications === 'Drone Obstacle Avoidance and Terrain Following') {
+    product_application = '无人机避障与防地飞行';
+  }
+  if (product.Applications === 'Automotive Corner Radar') {
+    product_application = '汽车角雷达';
+  }
+  if (product.Applications === 'Automotive Front Obstacle Avoidance Radar') {
+    product_application = '汽车前向避障雷达';
+  }
+  if (product.Applications === 'Smart Traffic Radar') {
+    product_application = '智能交通';
+  }
+  if (product.Applications === 'Robot Obstacle Avoidance Radar') {
+    product_application = '机器人避障';
+  }
+  if (product.Applications === 'Indoor Personnel Detection Radar') {
+    product_application = '室内人员检测';
+  }
+} else if (currentLanguage === 'en-US') {
+  measurement = "Measurement Range";
+  Dimensions = "Dimensions";
+  Frequency = "Frequency Range";
+  if (product.Applications === 'Drone Obstacle Avoidance and Terrain Following') {
+    product_application = 'Drone Obstacle Avoidance and Terrain Following';
+  }
+  if (product.Applications === 'Automotive Corner Radar') {
+    product_application = 'Automotive Corner Radar';
+  }
+
+  if (product.Applications === 'Automotive Front Obstacle Avoidance Radar') {
+    product_application = 'Automotive Front Obstacle Avoidance Radar';
+  }
+
+
+  if (product.Applications === 'Smart Traffic Radar') {
+    product_application = 'Smart Traffic Radar';
+  }
+  if (product.Applications === 'Robot Obstacle Avoidance Radar') {
+    product_application = 'Robot Obstacle Avoidance Radar';
+  }
+  if (product.Applications === 'Indoor Personnel Detection Radar') {
+    product_application = 'Indoor Personnel Detection Radar';
+  }
+} else if (currentLanguage === 'ja-JP') {
+  measurement = "測定範囲";
+  Dimensions = "サイズ";
+  Frequency = "周波数範囲";
+  if (product.Applications === 'Drone Obstacle Avoidance and Terrain Following') {
+    product_application = 'ドローンの障害物回避と地形追従';
+  }
+  if (product.Applications === 'Automotive Front Obstacle Avoidance Radar') {
+    product_application = '自動車前方障害物回避レーダー';
+  }
+  if (product.Applications === 'Automotive Corner Radar') {
+    product_application = '自動車コーナーレーダー';
+  }
+  if (product.Applications === 'Smart Traffic Radar') {
+    product_application = 'スマート交通レーダー';
+  }
+  if (product.Applications === 'Robot Obstacle Avoidance Radar') {
+    product_application = 'ロボットの障害物回避レーダー';
+  }
+  if (product.Applications === 'Indoor Personnel Detection Radar') {
+    product_application = '室内人員検出レーダー';
+  }
+}
+
+
+
           card.innerHTML += `
             <img src="images/product-${product['Product Name'].toLowerCase().replace(/\s+/g, '-')}.png" 
                  alt="${product['Product Name']}" 
@@ -660,10 +759,10 @@
 
             card.innerHTML += `
             <div class="product-details">
-              <p>${product.Applications}</p>
-                <p data-i18n="measurementRange">Measurement Range: ${product['Measurement Range']}</p>
-                <p data-i18n="dimensions">Dimensions: ${product.Dimensions}</p>
-                <p data-i18n="frequencyRange">Frequency Range: ${product['Frequency Range']}</p>
+              <p>${product_application}</p>
+                <p>${measurement} : ${product['Measurement Range']}</p>
+                <p>${Dimensions}: ${product.Dimensions}</p>
+                <p>${Frequency}: ${product['Frequency Range']}</p>
             </div>
           `;
 
@@ -791,7 +890,7 @@
           break;
         case 'Robot':
           filtered = window.allProducts.filter(p =>
-            p.Applications.includes('Robot Obstacle Avoidance Radar')
+            p.Applications.includes('Robot Obstacle Avoidance Radar Radar')
           );
           break;
         case 'Indoor Person':

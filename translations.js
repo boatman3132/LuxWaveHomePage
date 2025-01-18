@@ -48,6 +48,7 @@ const translations = {
     "futureRadarDesc2": "在 LuxWave，我們致力於引領雷達和感測器技術的發展，推動智能、互聯系統的未來，從而改變全球各行各業。",
     "downloadFile": "下載文件",
     downloadPDF: "下載 PDF",
+    "measurementRange": "尺寸",
   },
   "zh-CN": {
     "siteTitle": "璿机科技",
