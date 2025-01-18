@@ -336,13 +336,21 @@ function renderComparisonTable(products, productNameHeader) {
 
   // 添加下載文件欄位
   const downloadRow = document.createElement('tr');
-  downloadRow.innerHTML = `<td data-i18n="downloadFile">下載</td>`;
+  downloadRow.innerHTML = `<td data-i18n="downloadFile"></td>`;
   products.forEach(product => {
     const productName = product[productNameHeader].toLowerCase().replace(/\s+/g, '-');
-    const pdfPath = `document/DataSheet-${productName}.pdf`;
+            let pdfPath = `document/DataSheet-${productName}.pdf`; // Default PDF path
+
+            // Check for specific product names and set the corresponding Google Drive link
+            if (product[productNameHeader] === 'U20') {
+              pdfPath = 'https://drive.google.com/file/d/1Mu0hmGxf7RLY0AqHfssZ67TEuqvIV0sD/view?usp=sharing';
+            } else if (product[productNameHeader] === 'U80') {
+              pdfPath = 'https://drive.google.com/file/d/1LptSGPYoIELqgdqmzoII_mTMO1CnBPD8/view?usp=sharing';
+            }
+
     downloadRow.innerHTML += `
       <td>
-        <a href="${pdfPath}" download class="download-btn">下載 PDF</a>
+        <a href="${pdfPath}" target="_blank" class="download-btn">PDF</a>
       </td>
     `;
   });
