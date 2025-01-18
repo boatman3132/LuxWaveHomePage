@@ -1,8 +1,5 @@
 
-首頁
-
-https://boatman3132.github.io/LuxWaveHomePage/index.html
-
+[首頁](https://boatman3132.github.io/LuxWaveHomePage/index.html)
 
 
 ### Welcome to LuxWave Ltd.
