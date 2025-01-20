@@ -9,7 +9,7 @@ function initLanguageSelect() {
     });
     
     // 初始化語言（從 localStorage 讀取）
-    const savedLang = localStorage.getItem("selectedLanguage") || "zh-TW";
+    const savedLang = localStorage.getItem("selectedLanguage") || "us-en";
     languageSelect.value = savedLang;
     applyTranslations(savedLang);
 
