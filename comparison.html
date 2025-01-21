@@ -350,7 +350,7 @@ function renderComparisonTable(products, productNameHeader) {
 
     downloadRow.innerHTML += `
       <td>
-        <a href="${pdfPath}" target="_blank" class="download-btn">PDF</a>
+    ${product[productNameHeader] === 'U20' || product[productNameHeader] === 'U80' ? `<a href="${pdfPath}" target="_blank" class="download-btn">PDF</a>` : ''}
       </td>
     `;
   });

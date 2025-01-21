@@ -110,7 +110,7 @@ const translations = {
     "products-detail": "Product Details",
     "about": "About Us",
     "languageSwitch": "Language",
-    "compareTitle": "Product Comparison",
+    "compareTitle": "Product Compare",
     "contact": "Contact Us",
     "heroTitle": "Leading Millimeter-Wave Radar Solutions",
     "heroSubtitle": "Precision · Stability · Multi-Applications",
