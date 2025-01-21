@@ -264,3 +264,97 @@ video {
 .hidden {
   display: none;
 }
+
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.site-header,
+.hero,
+.features,
+.site-footer,
+.company-intro,
+.our-solutions,
+.future-radar {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.site-header {
+  animation-delay: 0.2s;
+}
+
+.hero {
+  animation-delay: 0.4s;
+}
+
+.features {
+  animation-delay: 0.6s;
+}
+
+.company-intro {
+  animation-delay: 0.8s;
+}
+
+.our-solutions {
+  animation-delay: 1s;
+}
+
+.future-radar {
+  animation-delay: 1.2s;
+}
+
+.site-footer {
+  animation-delay: 1.4s;
+}
+
+.company-intro {
+  padding: 40px 20px;
+  background-color: rgb(245, 248, 255);
+}
+
+.intro-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.intro-content h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.intro-content p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.our-solutions,
+.future-radar {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.our-solutions h2,
+.future-radar h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.our-solutions p,
+.future-radar p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
