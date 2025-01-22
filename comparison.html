@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 從 URL 參數或本地存儲中獲取當前語言
   const urlLang = urlParams.get('lang'); // 從 URL 參數獲取語言
   const storedLang = localStorage.getItem('selectedLanguage'); // 從本地存儲獲取語言
-  const currentLanguage = urlLang || storedLang || 'zh-TW'; // 默認為繁體中文
+  const currentLanguage = urlLang || storedLang || 'en-us'; // 默認為繁體中文
 
   // 設置 languageSelect 的值
   languageSelect.value = currentLanguage;
