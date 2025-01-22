@@ -188,7 +188,7 @@
         </tbody>
       </table>
     </div>
-    <button class="back-btn" onclick="window.location.href='products.html'" data-i18n="backButton">返回產品列表</button>
+    <button class="back-btn" onclick="window.location.href='index.html'" data-i18n="backButton">返回產品列表</button>
   </main>
 
   <footer class="site-footer">
@@ -342,15 +342,15 @@ function renderComparisonTable(products, productNameHeader) {
             let pdfPath = `document/DataSheet-${productName}.pdf`; // Default PDF path
 
             // Check for specific product names and set the corresponding Google Drive link
-            if (product[productNameHeader] === 'U20') {
+            if (product[productNameHeader] === 'U20-77A' || product[productNameHeader] === 'U20-60A') {
               pdfPath = 'https://drive.google.com/file/d/1Mu0hmGxf7RLY0AqHfssZ67TEuqvIV0sD/view?usp=sharing';
-            } else if (product[productNameHeader] === 'U80') {
+            } else if (product[productNameHeader] === 'U80-77A' || product[productNameHeader] === 'U80-60A') {
               pdfPath = 'https://drive.google.com/file/d/1LptSGPYoIELqgdqmzoII_mTMO1CnBPD8/view?usp=sharing';
             }
 
     downloadRow.innerHTML += `
       <td>
-    ${product[productNameHeader] === 'U20' || product[productNameHeader] === 'U80' ? `<a href="${pdfPath}" target="_blank" class="download-btn">PDF</a>` : ''}
+    ${product[productNameHeader] === 'U20-77A' || product[productNameHeader] === 'U20-60A' || product[productNameHeader] === 'U80-77A' || product[productNameHeader] === 'U80-60A' ? `<a href="${pdfPath}" target="_blank" class="download-btn">PDF</a>` : ''}
       </td>
     `;
   });
