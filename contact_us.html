@@ -185,8 +185,6 @@ body {
   transform: translateY(-2px);
 }
 
-
-
 /* 加載動畫 */
 .loading {
   display: flex;
@@ -225,7 +223,6 @@ body {
   color: #555;
 }
 
-
 /* 響應式設計 */
 @media (max-width: 768px) {
   .form-container {
@@ -241,17 +238,17 @@ body {
   }
 
   /* 隱藏產品選擇部分的初始狀態 */
-    .product-selection {
-      display: none; /* 初始隱藏 */
-      margin-top: 20px; /* 與上方內容的間距 */
-      transition: opacity 0.3s ease; /* 淡入淡出效果 */
-    }
+  .product-selection {
+    display: none; /* 初始隱藏 */
+    margin-top: 20px; /* 與上方內容的間距 */
+    transition: opacity 0.3s ease; /* 淡入淡出效果 */
+  }
 
-    /* 顯示產品選擇部分 */
-    .product-selection.visible {
-      display: block;
-      opacity: 1;
-    }
+  /* 顯示產品選擇部分 */
+  .product-selection.visible {
+    display: block;
+    opacity: 1;
+  }
 }
   </style>
 </head>
@@ -286,56 +283,52 @@ body {
     <form id="custom-form">
       <div class="form-row name-row">
         <div class="name-group">
-          <label for="last-name">姓氏：</label>
+          <label for="family-name" data-i18n="family-name">姓氏：</label>
           <input type="text" id="last-name" name="last-name" required>
         </div>
         <div class="name-group">
-          <label for="first-name">名字：</label>
+          <label for="first-name" data-i18n="firstName">名字：</label>
           <input type="text" id="first-name" name="first-name" required>
         </div>
       </div>
   
       <div class="form-row">
-        <label for="email">電子郵件：</label>
+        <label for="email" data-i18n="email">電子郵件：</label>
         <input type="email" id="email" name="email" required>
       </div>
   
       <div class="form-row">
-        <label for="question">諮詢內容：</label>
+        <label for="question" data-i18n="question">諮詢內容：</label>
         <textarea id="question" name="question" rows="10" required></textarea>
       </div>
   
       <div class="form-row">
-        <label>感興趣的產品類別：</label>
+        <label data-i18n="productInterest">感興趣的產品類別：</label>
         <div class="button-group">
-          <button type="button" class="product-button" data-value="無人機">無人機</button>
-          <button type="button" class="product-button" data-value="機器人避障雷達">機器人避障</button>
-          <button type="button" class="product-button" data-value="智慧交通">智慧交通</button>
-          <button type="button" class="product-button" data-value="室內人員檢測">室內人員檢測</button>
+          <button type="button" class="product-button" data-value="無人機" data-i18n="drone">無人機</button>
+          <button type="button" class="product-button" data-value="機器人避障雷達" data-i18n="robotObstacle">機器人避障</button>
+          <button type="button" class="product-button" data-value="智慧交通" data-i18n="smartTraffic">智慧交通</button>
+          <button type="button" class="product-button" data-value="室內人員檢測" data-i18n="indoorPerson">室內人員檢測</button>
         </div>
       </div>
   
       <!-- 初始隱藏「想要諮詢的產品」部分 -->
       <div class="form-row product-selection" style="display: none;">
-        <label>想要諮詢的產品：</label>
+        <label data-i18n="Interestproduct">想要諮詢的產品：</label>
         <div id="products-container"></div>
         <br></br>
 
         <div class="form-row">
-          <button type="submit">送出</button>
+          <button type="submit" data-i18n="submit">送出</button>
         </div>
       </div>
-  
-
     </form>
     <p id="response-message"></p>
-
   </div>
 
-    <div id="loading" class="loading" style="display: none;">
-      <div class="loader"></div>
-      <p>提交中，請稍候...</p>
-    </div>
+  <div id="loading" class="loading" style="display: none;">
+    <div class="loader"></div>
+    <p data-i18n="loading">提交中，請稍候...</p>
   </div>
 
   <footer class="site-footer">
@@ -384,11 +377,14 @@ body {
         return;
       }
 
+
+      
+
       const tableHTML = `
         <table class="product-table">
           <thead>
             <tr>
-              <th>選擇</th>
+              <th></th>
               <th>產品名稱</th>
               <th>尺寸</th>
               <th>測量範圍</th>
@@ -432,7 +428,49 @@ body {
           renderProducts(this.dataset.value);
         });
       });
+
+      // 語言切換功能
+      const languageSelect = document.getElementById('languageSelect');
+      languageSelect.addEventListener('change', (e) => {
+        const selectedLanguage = e.target.value;
+        updateContactPage(selectedLanguage);
+      });
+
+      // 初始載入時更新頁面
+      updateContactPage(languageSelect.value);
     });
+
+    // 更新聯絡我們頁面的內容
+    function updateContactPage(language) {
+      const translationsForLanguage = translations[language];
+
+      // 更新表單標籤
+      document.querySelector('label[for="last-name"]').textContent = translationsForLanguage.lastName + "：";
+      document.querySelector('label[for="first-name"]').textContent = translationsForLanguage.firstName + "：";
+      document.querySelector('label[for="email"]').textContent = translationsForLanguage.email + "：";
+      document.querySelector('label[for="question"]').textContent = translationsForLanguage.question + "：";
+      document.querySelector('.form-row label').textContent = translationsForLanguage.productInterest + "：";
+
+      // 更新產品按鈕
+      document.querySelectorAll('.product-button').forEach((button, index) => {
+        const productTypes = [translationsForLanguage.drone, translationsForLanguage.robotObstacle, translationsForLanguage.smartTraffic, translationsForLanguage.indoorPerson];
+        button.textContent = productTypes[index];
+      });
+
+      // 更新提交按鈕
+      document.querySelector('button[type="submit"]').textContent = translationsForLanguage.submit;
+
+      // 更新加載動畫的文字
+      document.querySelector('.loading p').textContent = translationsForLanguage.loading;
+
+      // 更新提交成功或失敗的訊息
+      const responseMessage = document.getElementById('response-message');
+      if (responseMessage.textContent.includes('成功')) {
+        responseMessage.textContent = translationsForLanguage.submitSuccess;
+      } else if (responseMessage.textContent.includes('失敗')) {
+        responseMessage.textContent = translationsForLanguage.submitFail;
+      }
+    }
 
     // 表單提交處理
     document.getElementById('custom-form').addEventListener('submit', function(e) {
@@ -464,7 +502,7 @@ body {
       })
       .then(() => {
         document.getElementById('loading').style.display = 'none';
-        document.getElementById('response-message').textContent = '提交成功！';
+        document.getElementById('response-message').textContent = translations[languageSelect.value].submitSuccess;
         this.reset();
         document.querySelectorAll('.product-button, input[type="checkbox"]').forEach(el => {
           el.classList.remove('selected');
@@ -474,7 +512,7 @@ body {
       })
       .catch(error => {
         document.getElementById('loading').style.display = 'none';
-        document.getElementById('response-message').textContent = '提交失敗，請重試。';
+        document.getElementById('response-message').textContent = translations[languageSelect.value].submitFail;
         console.error('提交錯誤:', error);
       });
     });
