@@ -199,7 +199,7 @@ const translations = {
     "firstName": "First Name",
     "email": "Email",
     "question": "Question",
-    "productInterest": "Product Interest",
+    "productInterest": "Interested Product Categories",
     "Interestproduct": "Interested Product:",
     "submit": "Submit",
     "submitSuccess": "Submission successful!",
