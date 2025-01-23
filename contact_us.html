@@ -371,6 +371,36 @@ body {
       const container = document.getElementById('products-container');
       const appType = categoryMapping[category];
       const filteredProducts = productsData.filter(p => p.應用 === appType);
+      if (languageSelect.value === 'zh-TW') {
+        productname = '產品名稱';
+        size = '尺寸';
+        measurement = '測量範圍';
+        frequency = '頻率範圍';
+      }
+      else if (languageSelect.value === 'zh-CN') {
+        productname = '产品名称';
+        size = '尺寸';
+        measurement = '测量范围';
+        frequency = '频率范围';
+      }
+      else if (languageSelect.value === 'en-US') {
+        productname = 'Product Name';
+        size = 'Size';
+        measurement = 'Measurement Range';
+        frequency = 'Frequency Range';
+      }
+      else if (languageSelect.value === 'ja-JP') {
+        productname = '製品名';
+        size = 'サイズ';
+        measurement = '測定範囲';
+        frequency = '周波数範囲';
+      }
+      else {
+        productname = '產品名稱';
+        size = '尺寸';
+        measurement = '測量範圍';
+        frequency = '頻率範圍';
+      }
 
       if (filteredProducts.length === 0) {
         container.innerHTML = '<p>暫無相關產品</p>';
@@ -385,10 +415,10 @@ body {
           <thead>
             <tr>
               <th></th>
-              <th>產品名稱</th>
-              <th>尺寸</th>
-              <th>測量範圍</th>
-              <th>頻率範圍</th>
+              <th>${productname}</th>
+              <th>${size}</th>
+              <th>${measurement}</th>
+              <th>${frequency}</th>
             </tr>
           </thead>
           <tbody>
@@ -434,10 +464,13 @@ body {
       languageSelect.addEventListener('change', (e) => {
         const selectedLanguage = e.target.value;
         updateContactPage(selectedLanguage);
+        renderProducts(this.dataset.value);
+
       });
 
       // 初始載入時更新頁面
       updateContactPage(languageSelect.value);
+      
     });
 
     // 更新聯絡我們頁面的內容

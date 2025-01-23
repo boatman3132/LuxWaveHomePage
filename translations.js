@@ -63,7 +63,12 @@ const translations = {
     "drone": "無人機",
     "robotObstacle": "機器人避障",
     "smartTraffic": "智慧交通",
-    "indoorPerson": "室內人員檢測"
+    "indoorPerson": "室內人員檢測",
+    "productName": "產品名稱",
+    "size": "尺寸",
+    "measurementRange": "測量範圍",
+    "frequencyRange": "頻率範圍",
+
   },
   "zh-CN": {
     "siteTitle": "璿机科技",
@@ -131,7 +136,11 @@ const translations = {
     "drone": "无人机",
     "robotObstacle": "机器人避障",
     "smartTraffic": "智能交通",
-    "indoorPerson": "室内人员检测"
+    "indoorPerson": "室内人员检测",
+    "productName": "产品名称",
+    "size": "尺寸",
+    "measurementRange": "测量范围",
+    "frequencyRange": "频率范围",
   },
   "en-US": {
     "siteTitle": " ",
