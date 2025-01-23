@@ -14,55 +14,250 @@
   <link rel="stylesheet" href="style.css"/>
   <style>
 
-    .form-container {
-        max-width: 400px;
-        margin: 0 auto;
+/* 表單漸入動畫 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px); /* 從下方 20px 開始 */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* 回到原始位置 */
+  }
+}
+
+.form-container {
+  animation: fadeIn 0.9s ease-out; /* 應用淡入動畫 */
+  opacity: 0; /* 初始狀態為透明 */
+  animation-fill-mode: forwards; /* 保持動畫結束後的狀態 */
+}
+
+    /* 基本重置 */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* 表單容器 */
+.form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* 表單行 */
+
+/* 姓名輸入框的容器 */
+.name-row {
+  display: flex;
+  gap: 20px; /* 設置兩個輸入框之間的間距 */
+}
+
+.name-group {
+  flex: 1; /* 讓兩個輸入框平分寬度 */
+}
+
+.name-group input[type="text"] {
+  width: 100%; /* 讓輸入框佔滿父容器的寬度 */
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.form-row label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.form-row input[type="text"],
+.form-row input[type="email"],
+.form-row textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-row input[type="text"]:focus,
+.form-row input[type="email"]:focus,
+.form-row textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.form-row textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+/* 產品按鈕組 */
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-button {
+  background: #f1f1f1;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.product-button:hover {
+  background: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+.product-button.selected {
+  background: #007bff;
+  color: #fff;
+}
+
+/* 產品表格 */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.product-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+}
+
+.product-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.product-table input[type="checkbox"] {
+  margin: 0;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/* 提交按鈕 */
+.form-row button[type="submit"] {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.form-row button[type="submit"]:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+
+
+/* 加載動畫 */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed; /* 固定定位 */
+  top: 50%; /* 垂直置中 */
+  left: 50%; /* 水平置中 */
+  transform: translate(-50%, -50%); /* 確保完全置中 */
+  background: rgba(255, 255, 255, 0.9); /* 半透明背景 */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* 確保在最上層 */
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px; /* 與文字的間距 */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading p {
+  margin: 0; /* 移除文字的上邊距 */
+  font-size: 14px;
+  color: #555;
+}
+
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .product-button {
+    width: 100%;
+  }
+
+  /* 隱藏產品選擇部分的初始狀態 */
+    .product-selection {
+      display: none; /* 初始隱藏 */
+      margin-top: 20px; /* 與上方內容的間距 */
+      transition: opacity 0.3s ease; /* 淡入淡出效果 */
     }
 
-    input, textarea {
-        width: 100%;
-        padding: 8px;
-        margin-top: 10px;
-        border: 1px solid #343131;
-        border-radius: 4px;
+    /* 顯示產品選擇部分 */
+    .product-selection.visible {
+      display: block;
+      opacity: 1;
     }
-    button {
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    button:hover {
-        background-color: #45a049;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 10px; /* 按鈕之間的間距 */
-    }
-
-    .product-button {
-      padding: 10px 20px;
-      background-color: #646262; /* 未選擇時的背景色 */
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .product-button.selected {
-      background-color: #4CAF50; /* 已選擇時的背景色 */
-      color: white; /* 已選擇時的文字顏色 */
-    }
-    
+}
   </style>
-  </html>
-
-  <body>
+</head>
+<body>
   <header class="site-header">
+    <!-- 頁頭內容保持不變 -->
     <div class="logo-area">
       <a href="index.html">
         <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
@@ -74,7 +269,6 @@
         <li><a href="index.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
         <li><a href="about.html" class="gradient-btn" data-i18n="about">關於我們</a></li>
         <li><a href="contact_us.html" class="gradient-btn active" data-i18n="contact_us">聯絡我們</a></li>
-
       </ul>
     </nav>
     <div class="language-switch">
@@ -89,60 +283,178 @@
   </header>
 
   <div class="form-container">
-    <h2>聯絡我們</h2>
     <form id="custom-form">
-      <label for="last-name">姓氏：</label>
-      <input type="text" id="last-name" name="last-name" required>
-
-      <label for="first-name">名字：</label>
-      <input type="text" id="first-name" name="first-name" required>
-
-      <label for="email">電子郵件：</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="question">問題：</label>
-      <textarea id="question" name="question" rows="5" required></textarea>
-
-      <label>感興趣的產品類別：</label>
-      <div class="button-group">
-        <button type="button" class="product-button" data-value="無人機">無人機</button>
-        <button type="button" class="product-button" data-value="智慧交通">智慧交通</button>
-        <button type="button" class="product-button" data-value="室內人員檢測">室內人員檢測</button>
+      <div class="form-row name-row">
+        <div class="name-group">
+          <label for="last-name">姓氏：</label>
+          <input type="text" id="last-name" name="last-name" required>
+        </div>
+        <div class="name-group">
+          <label for="first-name">名字：</label>
+          <input type="text" id="first-name" name="first-name" required>
+        </div>
       </div>
+  
+      <div class="form-row">
+        <label for="email">電子郵件：</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+  
+      <div class="form-row">
+        <label for="question">諮詢內容：</label>
+        <textarea id="question" name="question" rows="10" required></textarea>
+      </div>
+  
+      <div class="form-row">
+        <label>感興趣的產品類別：</label>
+        <div class="button-group">
+          <button type="button" class="product-button" data-value="無人機">無人機</button>
+          <button type="button" class="product-button" data-value="機器人避障雷達">機器人避障</button>
+          <button type="button" class="product-button" data-value="智慧交通">智慧交通</button>
+          <button type="button" class="product-button" data-value="室內人員檢測">室內人員檢測</button>
+        </div>
+      </div>
+  
+      <!-- 初始隱藏「想要諮詢的產品」部分 -->
+      <div class="form-row product-selection" style="display: none;">
+        <label>想要諮詢的產品：</label>
+        <div id="products-container"></div>
+        <br></br>
 
-      <button type="submit">送出</button>
+        <div class="form-row">
+          <button type="submit">送出</button>
+        </div>
+      </div>
+  
+
     </form>
     <p id="response-message"></p>
-</div>
-  
-  
+
+  </div>
+
+    <div id="loading" class="loading" style="display: none;">
+      <div class="loader"></div>
+      <p>提交中，請稍候...</p>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <p>© 2025 LuxWave. All rights reserved.</p>
   </footer>
 
   <script>
-    
-    document.getElementById('custom-form').addEventListener('submit', function (e) {
-      e.preventDefault();
+    // CSV數據映射配置
+    const categoryMapping = {
+      '無人機': '無人機避障與防地飛行',
+      '機器人避障雷達': '機器人避障雷達',
+      '智慧交通': '智慧交通雷達',
+      '室內人員檢測': '室內人員檢測雷達'
+    };
 
-      // 收集已選擇的產品類別
-      const selectedProducts = [];
-      document.querySelectorAll('.product-button.selected').forEach(button => {
-        selectedProducts.push(button.getAttribute('data-value'));
+    let productsData = [];
+
+    // 加載CSV數據
+    async function loadCSVData() {
+      try {
+        const response = await fetch('Radar_Product_Details-zh-tw.csv');
+        const csvText = await response.text();
+        const rows = csvText.split('\n').filter(row => row.trim() !== '');
+        const headers = rows[0].split(',').map(h => h.trim());
+        
+        productsData = rows.slice(1).map(row => {
+          const values = row.split(',');
+          return headers.reduce((obj, header, index) => {
+            obj[header] = values[index] ? values[index].trim() : '';
+            return obj;
+          }, {});
+        });
+      } catch (error) {
+        console.error('加載CSV失敗:', error);
+      }
+    }
+
+    // 生成產品表格
+    function renderProducts(category) {
+      const container = document.getElementById('products-container');
+      const appType = categoryMapping[category];
+      const filteredProducts = productsData.filter(p => p.應用 === appType);
+
+      if (filteredProducts.length === 0) {
+        container.innerHTML = '<p>暫無相關產品</p>';
+        return;
+      }
+
+      const tableHTML = `
+        <table class="product-table">
+          <thead>
+            <tr>
+              <th>選擇</th>
+              <th>產品名稱</th>
+              <th>尺寸</th>
+              <th>測量範圍</th>
+              <th>頻率範圍</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filteredProducts.map(product => `
+              <tr>
+                <td><input type="checkbox" name="selected-product" value="${product.產品名稱}"></td>
+                <td>${product.產品名稱}</td>
+                <td>${product.尺寸}</td>
+                <td>${product.測量範圍}</td>
+                <td>${product.頻率範圍}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+
+      container.innerHTML = tableHTML;
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadCSVData();
+
+      // 綁定產品類別按鈕事件
+      document.querySelectorAll('.product-button').forEach(button => {
+        button.addEventListener('click', function () {
+          // 移除其他按鈕的選中狀態
+          document.querySelectorAll('.product-button').forEach(btn => btn.classList.remove('selected'));
+          this.classList.add('selected');
+
+          // 顯示「想要諮詢的產品」部分
+          const productSelection = document.querySelector('.product-selection');
+          productSelection.style.display = 'block';
+          productSelection.classList.add('visible');
+
+          // 渲染產品表格
+          renderProducts(this.dataset.value);
+        });
       });
+    });
 
-      // 構建表單數據
+    // 表單提交處理
+    document.getElementById('custom-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('loading').style.display = 'block';
+
+      // 收集表單數據
+      const selectedProducts = Array.from(
+        document.querySelectorAll('input[name="selected-product"]:checked')
+      ).map(checkbox => checkbox.value);
+
       const formData = {
         lastName: document.getElementById('last-name').value,
         firstName: document.getElementById('first-name').value,
         email: document.getElementById('email').value,
         question: document.getElementById('question').value,
-        productInterest: selectedProducts // 加入選擇的產品類別
+        productInterest: document.querySelector('.product-button.selected')?.dataset.value || '',
+        selectedProducts: selectedProducts.join(', ')
       };
 
-      // 提交數據到 Google Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbzAYH_2aec6nMXudSEwnHa6u3UrUVcrqbrCWzPZXvC7CoOOpnQId-TE4mvwDUt3AOpcnA/exec', {
+      // 提交到Google Sheet
+      fetch('https://script.google.com/macros/s/AKfycbzTfGnTmESfnPsVPdaE2m4sSI9FU556moHh0DUgQKRjao7HI8XUZwOI2sSrwczvu3t4/exec', {
         method: 'POST',
         mode: 'no-cors',
         body: JSON.stringify(formData),
@@ -151,25 +463,22 @@
         }
       })
       .then(() => {
-        document.getElementById('response-message').innerText = '提交成功！';
-        document.getElementById('custom-form').reset();
-        document.querySelectorAll('.product-button').forEach(button => {
-          button.classList.remove('selected'); // 重置按鈕狀態
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('response-message').textContent = '提交成功！';
+        this.reset();
+        document.querySelectorAll('.product-button, input[type="checkbox"]').forEach(el => {
+          el.classList.remove('selected');
+          el.checked = false;
         });
+        document.getElementById('products-container').innerHTML = '';
       })
       .catch(error => {
-        document.getElementById('response-message').innerText = '提交失敗，請重試。';
-        console.error('提交失敗：', error);
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('response-message').textContent = '提交失敗，請重試。';
+        console.error('提交錯誤:', error);
       });
     });
-    // Add event listeners to product buttons
-    document.querySelectorAll('.product-button').forEach(button => {
-      button.addEventListener('click', function() {
-        // 切換選擇狀態
-        this.classList.toggle('selected');
-      });
-    });
-</script>
+  </script>
   <script src="translations.js"></script>
   <script src="script.js"></script>
 </body>
