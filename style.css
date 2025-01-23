@@ -285,7 +285,8 @@ video {
 .site-footer,
 .company-intro,
 .our-solutions,
-.future-radar {
+.future-radar
+.form-container {
   opacity: 0;
   animation: fadeIn 0.8s ease forwards;
 }
@@ -314,8 +315,12 @@ video {
   animation-delay: 1.2s;
 }
 
+.form-container {
+  animation-delay: 0.3s;
+}
+
 .site-footer {
-  animation-delay: 1.4s;
+  animation-delay: 0.4s;
 }
 
 .company-intro {

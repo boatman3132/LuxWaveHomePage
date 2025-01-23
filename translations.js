@@ -193,7 +193,7 @@ const translations = {
     "contactEmail": "Email: samuel763@gmail.com",
     "contactPhone": "電話: +886 935548787",
     "mapLocation": "地図",
-    "contactAddress": "〒103022 台北市大同区南京西路61号7階",
+    "contactAddress": "〒103022 台湾台北市大同区南京西路61号7階",
     "backButton": "戻る",
     addButton: '比較に追加',
     "filterTitle": "アプリケーションフィルター",

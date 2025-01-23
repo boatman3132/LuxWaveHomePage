@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxWave</title>
+  <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+  <link rel="shortcut icon" href="favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="favicon/site.webmanifest" />
+
+  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 10px;
+        border: 1px solid #343131;
+        border-radius: 4px;
+    }
+    button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px; /* 按鈕之間的間距 */
+    }
+
+    .product-button {
+      padding: 10px 20px;
+      background-color: #646262; /* 未選擇時的背景色 */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .product-button.selected {
+      background-color: #4CAF50; /* 已選擇時的背景色 */
+      color: white; /* 已選擇時的文字顏色 */
+    }
+    
+  </style>
+  </html>
+
+  <body>
+  <header class="site-header">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/luxwave-logo.png" alt="LuxWave Logo" class="logo" />
+      </a>
+      <h1 class="site-title" data-i18n="siteTitle">LuxWave 璿機科技</h1>
+    </div>
+    <nav class="main-nav">
+      <ul>
+        <li><a href="index.html" class="gradient-btn" data-i18n="products">產品介紹</a></li>
+        <li><a href="about.html" class="gradient-btn" data-i18n="about">關於我們</a></li>
+        <li><a href="contact_us.html" class="gradient-btn active" data-i18n="contact_us">聯絡我們</a></li>
+
+      </ul>
+    </nav>
+    <div class="language-switch">
+      <label data-i18n="languageSwitch">Language</label>
+      <select id="languageSelect">
+        <option value="zh-TW">繁體中文</option>
+        <option value="zh-CN">简体中文</option>
+        <option value="en-US">English</option>
+        <option value="ja-JP">日本語</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="form-container">
+    <h2>聯絡我們</h2>
+    <form id="custom-form">
+      <label for="last-name">姓氏：</label>
+      <input type="text" id="last-name" name="last-name" required>
+
+      <label for="first-name">名字：</label>
+      <input type="text" id="first-name" name="first-name" required>
+
+      <label for="email">電子郵件：</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="question">問題：</label>
+      <textarea id="question" name="question" rows="5" required></textarea>
+
+      <label>感興趣的產品類別：</label>
+      <div class="button-group">
+        <button type="button" class="product-button" data-value="無人機">無人機</button>
+        <button type="button" class="product-button" data-value="智慧交通">智慧交通</button>
+        <button type="button" class="product-button" data-value="室內人員檢測">室內人員檢測</button>
+      </div>
+
+      <button type="submit">送出</button>
+    </form>
+    <p id="response-message"></p>
+</div>
+  
+  
+
+  <footer class="site-footer">
+    <p>© 2025 LuxWave. All rights reserved.</p>
+  </footer>
+
+  <script>
+    
+    document.getElementById('custom-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // 收集已選擇的產品類別
+      const selectedProducts = [];
+      document.querySelectorAll('.product-button.selected').forEach(button => {
+        selectedProducts.push(button.getAttribute('data-value'));
+      });
+
+      // 構建表單數據
+      const formData = {
+        lastName: document.getElementById('last-name').value,
+        firstName: document.getElementById('first-name').value,
+        email: document.getElementById('email').value,
+        question: document.getElementById('question').value,
+        productInterest: selectedProducts // 加入選擇的產品類別
+      };
+
+      // 提交數據到 Google Apps Script
+      fetch('https://script.google.com/macros/s/AKfycbzAYH_2aec6nMXudSEwnHa6u3UrUVcrqbrCWzPZXvC7CoOOpnQId-TE4mvwDUt3AOpcnA/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(() => {
+        document.getElementById('response-message').innerText = '提交成功！';
+        document.getElementById('custom-form').reset();
+        document.querySelectorAll('.product-button').forEach(button => {
+          button.classList.remove('selected'); // 重置按鈕狀態
+        });
+      })
+      .catch(error => {
+        document.getElementById('response-message').innerText = '提交失敗，請重試。';
+        console.error('提交失敗：', error);
+      });
+    });
+    // Add event listeners to product buttons
+    document.querySelectorAll('.product-button').forEach(button => {
+      button.addEventListener('click', function() {
+        // 切換選擇狀態
+        this.classList.toggle('selected');
+      });
+    });
+</script>
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
