@@ -42,6 +42,17 @@ body {
   line-height: 1.6;
 }
 
+
+.contact-info {
+  max-width: 700px;
+  margin: 0 auto; /* Center the section horizontally */
+  padding: 20px; /* Optional: Add some padding for better spacing */
+}
+
+.contact-info iframe {
+  max-width: 100%;
+  height: 400px; /* Set the height to 600px */
+}
 /* 表單容器 */
 .form-container {
   max-width: 700px;
@@ -278,6 +289,22 @@ body {
       </select>
     </div>
   </header>
+
+
+<section class="contact-info">
+  <br></br>
+  <h2 data-i18n="mapLocation">地圖位置</h2>
+  <p data-i18n="contactAddress">103台北市大同區南京西路61號7樓</p>
+  <br></br>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.439456222257!2d121.5167573755061!3d25.05309023752232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a96bf975e355%3A0xbf5b1576bad365d1!2zMTAz5Y-w5YyX5biC5aSn5ZCM5Y2A5Y2X5Lqs6KW_6LevNjHomZ8!5e0!3m2!1szh-TW!2stw!4v1736995747031!5m2!1szh-TW!2stw" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="responsive-map"></iframe>
+</section>
+
+    <div class="contact-info">
+      <h2>Email：</h2>
+      <p>sales@luxwave.biz</p>
+    </div>
+
+
 
   <div class="form-container">
     <form id="custom-form">
@@ -525,7 +552,7 @@ body {
       };
 
       // 提交到Google Sheet
-      fetch('https://script.google.com/macros/s/AKfycbyxQxWbJWGZnOjqaPSG84TNBYwrfOx1vhHHxNjXEL9Ac_UUt1auGzK9VvA5y_CpV_aXFg/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbzLQ1JBoZNCzBzw93F2rBrMQP7IgI4mLly9YbIWJ6_RgRhdZDnM4_Kk-k7ShBbVqMPm/exec', {
         method: 'POST',
         mode: 'no-cors',
         body: JSON.stringify(formData),
